@@ -1,21 +1,40 @@
 {
-    "general":
-    {
+    "general": {
         "serviceProviderNameSpace": "HCECommerceOrders"
     },
-    "formData":
-    [
+    "formData": {
+        "e-commerce-carts": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECCartsForm"
+    },
+    "adminMenu": [
+        {
+            "route": "admin.routes.e.commerce.carts.index",
+            "translation": "HCECommerceOrders::e_commerce_carts.page_title",
+            "icon": "fa-circle-o",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_list",
+            "priority": 10
+        }
     ],
-    "adminMenu":
-    [
-    ],
-    "acl":
-    {
-        "permissions" :
-        [
+    "acl": {
+        "permissions": [
+            {
+                "name": "admin.routes.e.commerce.carts",
+                "controller": "interactivesolutions\\honeycombecommerceorders\\app\\http\\controllers\\ecommerce\\HCECCartsController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_list",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_create",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_update",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_delete",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_force_delete"
+                ]
+            }
         ],
-        "rolesActions" :
-        [
-        ]
+        "rolesActions": {
+            "project-admin": [
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_list",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_create",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_update",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_delete"
+            ]
+        }
     }
 }
