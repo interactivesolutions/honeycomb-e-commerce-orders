@@ -14,7 +14,6 @@ class CreateHcCartItemsTable extends Migration
     {
         Schema::create('hc_cart_items', function (Blueprint $table) {
             $table->integer('count', true);
-            $table->enum('active', ['1', '0'])->nullable()->default('1');
             $table->string('id', 36)->unique('id_UNIQUE');
             $table->timestamps();
             $table->softDeletes();
