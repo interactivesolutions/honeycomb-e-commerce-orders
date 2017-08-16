@@ -52,4 +52,20 @@ class HCECCartItems extends HCUuidModel
     {
         return $this->belongsTo(HCECCombinations::class, 'combination_id', 'id');
     }
+
+    /**
+     * Scope of cart items getting by given cart id
+     *
+     * @param $query
+     * @param $cartId
+     * @return mixed
+     */
+    public function scopeByCartId($query, $cartId)
+    {
+        $select = (new static)->getFillableFields();
+
+        return $query->select($select)
+            ->where('cart_id', $cartId)
+            ->has('cart');
+    }
 }
