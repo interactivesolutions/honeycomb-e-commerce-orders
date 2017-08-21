@@ -11,16 +11,26 @@ use interactivesolutions\honeycombecommerceorders\app\services\HCUserCartService
 
 class HCECCartsController extends HCBaseController
 {
+    /**
+     * @var HCUserCartService
+     */
     protected $userCartService;
+
+    /**
+     * @var HCCartService
+     */
+    protected $cartService;
 
     /**
      * RGCartController constructor.
      *
      * @param HCUserCartService $userCartService
+     * @param HCCartService $cartService
      */
-    public function __construct(HCUserCartService $userCartService)
+    public function __construct(HCUserCartService $userCartService, HCCartService $cartService)
     {
         $this->userCartService = $userCartService;
+        $this->cartService = $cartService;
     }
 
     /**
@@ -41,7 +51,7 @@ class HCECCartsController extends HCBaseController
             return $v->messages();
         }
 
-        $cartId = app(HCCartService::class)->getCartId($request, true);
+        $cartId = $this->cartService->getCartId($request, true);
 
         DB::beginTransaction();
 
@@ -80,7 +90,9 @@ class HCECCartsController extends HCBaseController
         DB::beginTransaction();
 
         try {
-            $this->userCartService->update($cartItemId, $request->input('amount'));
+            $cartId = $this->cartService->getCartId($request, true);
+
+            $this->userCartService->update($cartId, $cartItemId, $request->input('amount'));
         } catch ( \Exception $e ) {
             DB::rollback();
 
@@ -96,15 +108,18 @@ class HCECCartsController extends HCBaseController
     /**
      * Remove cart item from cart
      *
+     * @param Request $request
      * @param $cartItemId
      * @return array
      */
-    public function delete($cartItemId)
+    public function delete(Request $request, $cartItemId)
     {
         DB::beginTransaction();
 
         try {
-            $this->userCartService->remove($cartItemId);
+            $cartId = $this->cartService->getCartId($request, true);
+
+            $this->userCartService->remove($cartId, $cartItemId);
         } catch ( \Exception $e ) {
             DB::rollback();
 

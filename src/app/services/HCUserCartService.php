@@ -44,20 +44,25 @@ class HCUserCartService
     /**
      * Update the cart item with the given cart id.
      *
+     * @param $cartId
      * @param $cartItemId
      * @param $amount
      * @return
      * @throws \Exception
      */
-    public function update($cartItemId, $amount)
+    public function update($cartId, $cartItemId, $amount)
     {
         $amount = $this->validateAmount($amount);
 
         $cartItem = HCECCartItems::select('id', 'goods_id', 'combination_id', 'cart_id')
+            ->where('cart_id', $cartId)
             ->has('cart')
             ->find($cartItemId);
 
         if( is_null($cartItem) ) {
+            // log data
+            info(sprintf("cart item is null -> cartId: %s, itemId: %s, amount: %s", $cartId, $cartItemId, $amount));
+
             throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.item_not_found'));
         }
 
@@ -72,12 +77,16 @@ class HCUserCartService
     /**
      * Remove the cart item with the given cart item id from the cart.
      *
+     * @param $cartId
      * @param string $cartItemId
      * @return void
      */
-    public function remove($cartItemId)
+    public function remove($cartId, $cartItemId)
     {
-        HCECCartItems::where('id', $cartItemId)->forceDelete();
+        HCECCartItems::where('id', $cartItemId)
+            ->where('cart_id', $cartId)
+            ->has('cart')
+            ->forceDelete();
     }
 
     /**
