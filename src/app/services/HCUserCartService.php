@@ -109,7 +109,7 @@ class HCUserCartService
     {
         // check if goods is available
         $available = HCECStockSummary::where([
-            'goods_id'       => $goodsId,
+            'good_id'        => $goodsId,
             'combination_id' => $combinationId,
         ])->sum('on_sale');
 
