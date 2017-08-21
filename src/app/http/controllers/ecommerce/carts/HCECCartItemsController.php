@@ -58,7 +58,7 @@ class HCECCartItemsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_carts_items.cart_id'),
             ],
-            'goods_id'       => [
+            'goods.translations.{lang}.label'       => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_carts_items.goods_id'),
             ],
@@ -165,7 +165,7 @@ class HCECCartItemsController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = [];
+        $with = ['goods.translations'];
 
         if( $select == null )
             $select = HCECCartItems::getFillableFields();
