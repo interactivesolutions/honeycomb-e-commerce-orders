@@ -49,12 +49,11 @@ class HCCart
     protected function getCartContent()
     {
         return [
-            'cart_id'            => $this->cartId,
-            'count'              => $this->count(),
-            'price'              => $this->price(),
-            'price_tax_amount'   => $this->priceTaxAmount(),
-            'price_tax_excluded' => $this->priceTaxExcluded(),
-            'items'              => $this->getItems(),
+            'cart_id'          => $this->cartId,
+            'count'            => $this->count(),
+            'price'            => $this->price(),
+            'price_before_tax' => $this->priceBeforeTax(),
+            'items'            => $this->getItems(),
         ];
     }
 
@@ -84,7 +83,7 @@ class HCCart
     {
         $items = $this->getItems();
 
-        return $items->sum('amount');
+        return $items->sum('selected_amount');
     }
 
     /**
@@ -105,7 +104,7 @@ class HCCart
         $items = $this->getItems();
 
         $total = $items->reduce(function ($total, $cartItem) {
-            return $total + (array_get($cartItem, 'prices.total_price_tax_included'));
+            return $total + (array_get($cartItem, 'prices.total_price'));
         }, 0);
 
         return $total;
@@ -114,26 +113,12 @@ class HCCart
     /**
      * Get the total price of the items in the cart.
      */
-    public function priceTaxExcluded()
+    public function priceBeforeTax()
     {
         $items = $this->getItems();
 
         $total = $items->reduce(function ($total, $cartItem) {
-            return $total + (array_get($cartItem, 'prices.total_price_tax_excluded'));
-        }, 0);
-
-        return $total;
-    }
-
-    /**
-     * Get the total price of the items in the cart.
-     */
-    public function priceTaxAmount()
-    {
-        $items = $this->getItems();
-
-        $total = $items->reduce(function ($total, $cartItem) {
-            return $total + (array_get($cartItem, 'prices.total_price_tax_amount'));
+            return $total + (array_get($cartItem, 'prices.total_price_before_tax'));
         }, 0);
 
         return $total;
