@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommerceorders\app\services;
 
 use Illuminate\Http\Request;
+use interactivesolutions\honeycombecommercegoods\app\helpers\PriceHelper;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\carts\HCECCartItems;
 
 class HCCart
@@ -107,7 +108,7 @@ class HCCart
             return $total + (array_get($cartItem, 'prices.total_price'));
         }, 0);
 
-        return $total;
+        return PriceHelper::truncate($total);
     }
 
     /**
@@ -121,7 +122,7 @@ class HCCart
             return $total + (array_get($cartItem, 'prices.total_price_before_tax'));
         }, 0);
 
-        return $total;
+        return PriceHelper::truncate($total);
     }
 
     /**
