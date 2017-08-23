@@ -12,7 +12,15 @@ class HCECUserAddressValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            
+            'form_name'      => 'required|min:3',
+            'first_name'     => 'required|min:3',
+            'last_name'      => 'required|min:3',
+            'email'          => 'required|email',
+            'country_id'     => 'required|exists:oc_countries,id',
+            'street_address' => 'required|min:3',
+            'city'           => 'required|min:3',
+            'postal_code'    => 'required|numeric|min:5',
+            'phone'          => 'required|min:9',
         ];
     }
 }
