@@ -2,12 +2,10 @@
 
 namespace interactivesolutions\honeycombecommerceorders\app\models\ecommerce;
 
-use interactivesolutions\honeycombacl\app\models\HCUsers;
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+use Illuminate\Database\Eloquent\Model;
 use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
-use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\carts\HCECCartItems;
 
-class HCECCartCarrier extends HCUuidModel
+class HCECCartCarrier extends Model
 {
     /**
      * The database table used by the model.
