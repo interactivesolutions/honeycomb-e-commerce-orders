@@ -53,53 +53,65 @@ class HCECUserAddressController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'user.email'        => [
+            'user.email'          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.user_id'),
             ],
-            'form_name'      => [
+            'form_name'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.form_name'),
             ],
-            'first_name'     => [
+            'first_name'          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.first_name'),
             ],
-            'last_name'      => [
+            'last_name'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.last_name'),
             ],
-            'email'          => [
+            'email'               => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.email'),
             ],
-            'country.translation'     => [
+            'country.translation' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.country_id'),
             ],
-            'street_address' => [
+            'street_address'      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.street_address'),
             ],
-            'city'           => [
+            'city'                => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.city'),
             ],
-            'district'       => [
+            'district'            => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.district'),
             ],
-            'postal_code'    => [
+            'postal_code'         => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.postal_code'),
             ],
-            'phone'          => [
+            'phone'               => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.phone'),
             ],
-            'notes'          => [
+            'notes'               => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.notes'),
+            ],
+            'company_name'               => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_address.company_name'),
+            ],
+            'company_code'               => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_address.company_code'),
+            ],
+            'company_vat'               => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_address.company_vat'),
             ],
 
         ];
@@ -269,6 +281,9 @@ class HCECUserAddressController extends HCBaseController
         array_set($data, 'record.postal_code', array_get($_data, 'postal_code'));
         array_set($data, 'record.phone', array_get($_data, 'phone'));
         array_set($data, 'record.notes', array_get($_data, 'notes'));
+        array_set($data, 'record.company_name', array_get($_data, 'company_name'));
+        array_set($data, 'record.company_code', array_get($_data, 'company_code'));
+        array_set($data, 'record.company_vat', array_get($_data, 'company_vat'));
 
         return $data;
     }

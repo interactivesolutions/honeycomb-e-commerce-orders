@@ -13,4 +13,7 @@ return [
     'postal_code'    => 'Postal code',
     'phone'          => 'Phone',
     'notes'          => 'Notes',
+    'company_name'   => 'Company name',
+    'company_code'   => 'Company code',
+    'company_vat'    => 'Company vat',
 ];

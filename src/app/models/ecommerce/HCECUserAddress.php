@@ -20,7 +20,7 @@ class HCECUserAddress extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'form_name', 'first_name', 'last_name', 'email', 'country_id', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes'];
+    protected $fillable = ['id', 'user_id', 'form_name', 'first_name', 'last_name', 'email', 'country_id', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes', 'company_name', 'company_code', 'company_vat'];
 
     /**
      * Relation to table
