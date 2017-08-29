@@ -7,7 +7,8 @@
         "e-commerce-carts-items": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\carts\\HCECCartItemsForm",
         "e-commerce-address": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECUserAddressForm",
         "e-commerce-orders-states": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderStatesForm",
-        "e-commerce-orders": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECOrdersForm"
+        "e-commerce-orders": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECOrdersForm",
+        "e-commerce-orders-details": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderDetailsForm"
     },
     "adminMenu": [
         {
@@ -15,7 +16,8 @@
             "translation": "HCECommerceOrders::e_commerce_carts.page_title",
             "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_carts_list",
-            "priority": 10
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
         },
         {
             "route": "admin.routes.e.commerce.carts.items.index",
@@ -30,14 +32,16 @@
             "translation": "HCECommerceOrders::e_commerce_address.page_title",
             "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_list",
-            "priority": 10
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
         },
         {
             "route": "admin.routes.e.commerce.orders.states.index",
             "translation": "HCECommerceOrders::e_commerce_orders_states.page_title",
             "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_list",
-            "priority": 10
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
         },
         {
             "route": "admin.routes.e.commerce.orders.index",
@@ -45,6 +49,14 @@
             "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_list",
             "priority": 10
+        },
+        {
+            "route": "admin.routes.e.commerce.orders.details.index",
+            "translation": "HCECommerceOrders::e_commerce_orders_details.page_title",
+            "icon": "fa-circle-o",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_list",
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
         }
     ],
     "acl": {
@@ -103,6 +115,17 @@
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete",
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_force_delete"
                 ]
+            },
+            {
+                "name": "admin.routes.e.commerce.orders.details",
+                "controller": "interactivesolutions\\honeycombecommerceorders\\app\\http\\controllers\\ecommerce\\orders\\HCECOrderDetailsController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_list",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_create",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_update",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_delete",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -126,7 +149,11 @@
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_list",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_create",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_update",
-                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete"
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_list",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_create",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_update",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_delete"
             ]
         }
     }
