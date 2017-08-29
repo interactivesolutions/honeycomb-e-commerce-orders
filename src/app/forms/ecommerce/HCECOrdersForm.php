@@ -2,6 +2,11 @@
 
 namespace interactivesolutions\honeycombecommerceorders\app\forms\ecommerce;
 
+use interactivesolutions\honeycombacl\app\models\HCUsers;
+use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECUserAddress;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
+
 class HCECOrdersForm
 {
     // name of the form
@@ -29,30 +34,57 @@ class HCECOrdersForm
             ],
             'structure'  => [
                 [
-                    "type"            => "singleLine",
+                    "type"            => "dropDownList",
                     "fieldID"         => "order_state_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.order_state_id"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => HCECOrderStates::with('translations')->get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["translations.{lang}.label"],
+                    ],
+                ],
+                [
+                    "type"            => "dropDownList",
                     "fieldID"         => "user_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.user_id"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
+                    "options"         => HCUsers::select('id', 'email')->get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["email"],
+                    ],
+                ],
+                [
+                    "type"            => "dropDownList",
                     "fieldID"         => "user_address_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.user_address_id"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
+                    "options"         => HCECUserAddress::select('id', 'form_name')->get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["form_name"],
+                    ],
+                ],
+                [
+                    "type"            => "dropDownList",
                     "fieldID"         => "carrier_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.carrier_id"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ], [
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => HCECCarriers::select('id', 'label')->get(),
+                    "search"          => [
+                        "showNodes"              => ['label'],
+                        "maximumSelectionLength" => 1,
+                    ],
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "reference",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.reference"),

@@ -28,20 +28,19 @@ class HCECOrdersController extends HCBaseController
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if (auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_create'))
+        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_create') )
             $config['actions'][] = 'new';
 
-        if (auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_update'))
-        {
+        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_update') ) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if (auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete'))
+        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete') )
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
-        $config['filters'] = $this->getFilters ();
+        $config['filters'] = $this->getFilters();
 
         return hcview('HCCoreUI::admin.content.list', ['config' => $config]);
     }
@@ -54,79 +53,79 @@ class HCECOrdersController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'order_state_id'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
-],
-'user_id'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.user_id'),
-],
-'user_address_id'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.user_address_id'),
-],
-'carrier_id'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_id'),
-],
-'reference'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.reference'),
-],
-'payment'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.payment'),
-],
-'total_price'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_price'),
-],
-'total_price_before_tax'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
-],
-'total_discounts'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts'),
-],
-'total_discounts_before_tax'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
-],
-'total_paid'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid'),
-],
-'total_paid_before_tax'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
-],
-'shipping_price'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price'),
-],
-'shipping_price_before_tax'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price_before_tax'),
-],
-'carrier_note'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_note'),
-],
-'order_note'     => [
-    "type"  => "text",
-    "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
-],
+            'order_state.translations.{lang}.label' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
+            ],
+            'user.email'                            => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.user_id'),
+            ],
+            'user_address.form_name'                => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.user_address_id'),
+            ],
+            'carrier.label'     => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_id'),
+            ],
+            'reference'                             => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.reference'),
+            ],
+            'payment'                               => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.payment'),
+            ],
+            'total_price'                           => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price'),
+            ],
+            'total_price_before_tax'                => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
+            ],
+            'total_discounts'                       => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts'),
+            ],
+            'total_discounts_before_tax'            => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
+            ],
+            'total_paid'                            => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid'),
+            ],
+            'total_paid_before_tax'                 => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
+            ],
+            'shipping_price'                        => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price'),
+            ],
+            'shipping_price_before_tax'             => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price_before_tax'),
+            ],
+            'carrier_note'                          => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_note'),
+            ],
+            'order_note'                            => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
+            ],
 
         ];
     }
 
     /**
-    * Create item
-    *
-    * @return mixed
-    */
+     * Create item
+     *
+     * @return mixed
+     */
     protected function __apiStore()
     {
         $data = $this->getInputData();
@@ -137,11 +136,11 @@ class HCECOrdersController extends HCBaseController
     }
 
     /**
-    * Updates existing item based on ID
-    *
-    * @param $id
-    * @return mixed
-    */
+     * Updates existing item based on ID
+     *
+     * @param $id
+     * @return mixed
+     */
     protected function __apiUpdate(string $id)
     {
         $record = HCECOrders::findOrFail($id);
@@ -154,11 +153,11 @@ class HCECOrdersController extends HCBaseController
     }
 
     /**
-    * Updates existing specific items based on ID
-    *
-    * @param string $id
-    * @return mixed
-    */
+     * Updates existing specific items based on ID
+     *
+     * @param string $id
+     * @return mixed
+     */
     protected function __apiUpdateStrict(string $id)
     {
         HCECOrders::where('id', $id)->update(request()->all());
@@ -167,11 +166,11 @@ class HCECOrdersController extends HCBaseController
     }
 
     /**
-    * Delete records table
-    *
-    * @param $list
-    * @return mixed
-    */
+     * Delete records table
+     *
+     * @param $list
+     * @return mixed
+     */
     protected function __apiDestroy(array $list)
     {
         HCECOrders::destroy($list);
@@ -180,11 +179,11 @@ class HCECOrdersController extends HCBaseController
     }
 
     /**
-    * Delete records table
-    *
-    * @param $list
-    * @return mixed
-    */
+     * Delete records table
+     *
+     * @param $list
+     * @return mixed
+     */
     protected function __apiForceDelete(array $list)
     {
         HCECOrders::onlyTrashed()->whereIn('id', $list)->forceDelete();
@@ -193,11 +192,11 @@ class HCECOrdersController extends HCBaseController
     }
 
     /**
-    * Restore multiple records
-    *
-    * @param $list
-    * @return mixed
-    */
+     * Restore multiple records
+     *
+     * @param $list
+     * @return mixed
+     */
     protected function __apiRestore(array $list)
     {
         HCECOrders::whereIn('id', $list)->restore();
@@ -213,16 +212,16 @@ class HCECOrdersController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = [];
+        $with = ['order_state.translations', 'user', 'user_address', 'carrier'];
 
-        if ($select == null)
+        if( $select == null )
             $select = HCECOrders::getFillableFields();
 
         $list = HCECOrders::with($with)->select($select)
-        // add filters
-        ->where(function ($query) use ($select) {
-            $query = $this->getRequestParameters($query, $select);
-        });
+            // add filters
+            ->where(function ($query) use ($select) {
+                $query = $this->getRequestParameters($query, $select);
+            });
 
         // enabling check for deleted
         $list = $this->checkForDeleted($list);
@@ -244,25 +243,24 @@ class HCECOrdersController extends HCBaseController
      */
     protected function searchQuery(Builder $query, string $phrase)
     {
-        return $query->where (function (Builder $query) use ($phrase) {
-                $query->where('order_state_id', 'LIKE', '%' . $phrase . '%')
-->orWhere('user_id', 'LIKE', '%' . $phrase . '%')
-->orWhere('user_address_id', 'LIKE', '%' . $phrase . '%')
-->orWhere('carrier_id', 'LIKE', '%' . $phrase . '%')
-->orWhere('reference', 'LIKE', '%' . $phrase . '%')
-->orWhere('payment', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_price', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_price_before_tax', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_discounts', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_discounts_before_tax', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_paid', 'LIKE', '%' . $phrase . '%')
-->orWhere('total_paid_before_tax', 'LIKE', '%' . $phrase . '%')
-->orWhere('shipping_price', 'LIKE', '%' . $phrase . '%')
-->orWhere('shipping_price_before_tax', 'LIKE', '%' . $phrase . '%')
-->orWhere('carrier_note', 'LIKE', '%' . $phrase . '%')
-->orWhere('order_note', 'LIKE', '%' . $phrase . '%')
-;
-             });
+        return $query->where(function (Builder $query) use ($phrase) {
+            $query->where('order_state_id', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('user_id', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('user_address_id', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('carrier_id', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('reference', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('payment', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_price', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_price_before_tax', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_discounts', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_discounts_before_tax', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_paid', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('total_paid_before_tax', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('shipping_price', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('shipping_price_before_tax', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('carrier_note', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('order_note', 'LIKE', '%' . $phrase . '%');
+        });
     }
 
     /**
@@ -276,25 +274,25 @@ class HCECOrdersController extends HCBaseController
 
         $_data = request()->all();
 
-        if (array_has($_data, 'id'))
-            array_set ($data, 'record.id', array_get ($_data, 'id'));
+        if( array_has($_data, 'id') )
+            array_set($data, 'record.id', array_get($_data, 'id'));
 
         array_set($data, 'record.order_state_id', array_get($_data, 'order_state_id'));
-array_set($data, 'record.user_id', array_get($_data, 'user_id'));
-array_set($data, 'record.user_address_id', array_get($_data, 'user_address_id'));
-array_set($data, 'record.carrier_id', array_get($_data, 'carrier_id'));
-array_set($data, 'record.reference', array_get($_data, 'reference'));
-array_set($data, 'record.payment', array_get($_data, 'payment'));
-array_set($data, 'record.total_price', array_get($_data, 'total_price'));
-array_set($data, 'record.total_price_before_tax', array_get($_data, 'total_price_before_tax'));
-array_set($data, 'record.total_discounts', array_get($_data, 'total_discounts'));
-array_set($data, 'record.total_discounts_before_tax', array_get($_data, 'total_discounts_before_tax'));
-array_set($data, 'record.total_paid', array_get($_data, 'total_paid'));
-array_set($data, 'record.total_paid_before_tax', array_get($_data, 'total_paid_before_tax'));
-array_set($data, 'record.shipping_price', array_get($_data, 'shipping_price'));
-array_set($data, 'record.shipping_price_before_tax', array_get($_data, 'shipping_price_before_tax'));
-array_set($data, 'record.carrier_note', array_get($_data, 'carrier_note'));
-array_set($data, 'record.order_note', array_get($_data, 'order_note'));
+        array_set($data, 'record.user_id', array_get($_data, 'user_id'));
+        array_set($data, 'record.user_address_id', array_get($_data, 'user_address_id'));
+        array_set($data, 'record.carrier_id', array_get($_data, 'carrier_id'));
+        array_set($data, 'record.reference', array_get($_data, 'reference'));
+        array_set($data, 'record.payment', array_get($_data, 'payment'));
+        array_set($data, 'record.total_price', array_get($_data, 'total_price'));
+        array_set($data, 'record.total_price_before_tax', array_get($_data, 'total_price_before_tax'));
+        array_set($data, 'record.total_discounts', array_get($_data, 'total_discounts'));
+        array_set($data, 'record.total_discounts_before_tax', array_get($_data, 'total_discounts_before_tax'));
+        array_set($data, 'record.total_paid', array_get($_data, 'total_paid'));
+        array_set($data, 'record.total_paid_before_tax', array_get($_data, 'total_paid_before_tax'));
+        array_set($data, 'record.shipping_price', array_get($_data, 'shipping_price'));
+        array_set($data, 'record.shipping_price_before_tax', array_get($_data, 'shipping_price_before_tax'));
+        array_set($data, 'record.carrier_note', array_get($_data, 'carrier_note'));
+        array_set($data, 'record.order_note', array_get($_data, 'order_note'));
 
         return $data;
     }
