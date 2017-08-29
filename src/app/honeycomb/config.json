@@ -8,7 +8,8 @@
         "e-commerce-address": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECUserAddressForm",
         "e-commerce-orders-states": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderStatesForm",
         "e-commerce-orders": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\HCECOrdersForm",
-        "e-commerce-orders-details": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderDetailsForm"
+        "e-commerce-orders-details": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderDetailsForm",
+        "e-commerce-orders-history": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderHistoryForm"
     },
     "adminMenu": [
         {
@@ -55,6 +56,14 @@
             "translation": "HCECommerceOrders::e_commerce_orders_details.page_title",
             "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_list",
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
+        },
+        {
+            "route": "admin.routes.e.commerce.orders.history.index",
+            "translation": "HCECommerceOrders::e_commerce_orders_history.page_title",
+            "icon": "fa-circle-o",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_list",
             "priority": 10,
             "parent": "admin.routes.e.commerce.orders.index"
         }
@@ -126,6 +135,17 @@
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_delete",
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_force_delete"
                 ]
+            },
+            {
+                "name": "admin.routes.e.commerce.orders.history",
+                "controller": "interactivesolutions\\honeycombecommerceorders\\app\\http\\controllers\\ecommerce\\orders\\HCECOrderHistoryController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_list",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_create",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_update",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_delete",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -153,7 +173,11 @@
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_list",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_create",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_update",
-                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_delete"
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_details_delete",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_list",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_create",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_update",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_delete"
             ]
         }
     }
