@@ -5,6 +5,8 @@ namespace interactivesolutions\honeycombecommerceorders\app\models\ecommerce;
 use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 
 class HCECOrders extends HCUuidModel
@@ -31,6 +33,16 @@ class HCECOrders extends HCUuidModel
     public function order_state()
     {
         return $this->belongsTo(HCECOrderStates::class, 'order_state_id', 'id');
+    }
+
+    /**
+     * Relation to details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function details()
+    {
+        return $this->hasMany(HCECOrderDetails::class, 'order_id', 'id');
     }
 
     /**
@@ -62,4 +74,15 @@ class HCECOrders extends HCUuidModel
     {
         return $this->belongsTo(HCECCarriers::class, 'carrier_id', 'id');
     }
+    
+    /**
+     * Relation to table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_address()
+    {
+        return $this->hasOne(HCECOrderAddress::class, 'order_id', 'id');
+    }
+
 }
