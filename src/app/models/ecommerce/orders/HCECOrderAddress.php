@@ -19,7 +19,7 @@ class HCECOrderAddress extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'order_id', 'email', 'first_name', 'last_name', 'country', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes'];
+    protected $fillable = ['id', 'order_id', 'email', 'first_name', 'last_name', 'country', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes', 'company_name','company_code', 'company_vat'];
 
     /**
      * Relation to order

@@ -30,6 +30,9 @@ class CreateHcOrderAddressTable extends Migration
             $table->string('postal_code', 255)->nullable();
             $table->string('phone', 255)->nullable();
             $table->text('notes', 255)->nullable();
+            $table->string('company_name', 255)->nullable();
+            $table->string('company_code', 255)->nullable();
+            $table->string('company_vat', 255)->nullable();
 
             $table->foreign('order_id')->references('id')->on('hc_orders')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });

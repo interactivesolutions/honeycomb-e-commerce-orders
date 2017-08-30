@@ -12,5 +12,8 @@ return [
     'phone'          => 'Phone',
     'notes'          => 'Notes',
     'order_id'       => 'Order',
+    'company_name'   => 'Company name',
+    'company_code'   => 'Company code',
+    'company_vat'    => 'Company vat',
 
 ];

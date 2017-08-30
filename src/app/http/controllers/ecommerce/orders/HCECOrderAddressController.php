@@ -53,49 +53,61 @@ class HCECOrderAddressController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'order.reference'          => [
+            'order.reference' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.order_id'),
             ],
-            'email'          => [
+            'email'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.email'),
             ],
-            'first_name'     => [
+            'first_name'      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.first_name'),
             ],
-            'last_name'      => [
+            'last_name'       => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.last_name'),
             ],
-            'country'        => [
+            'country'         => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.country'),
             ],
-            'street_address' => [
+            'street_address'  => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.street_address'),
             ],
-            'city'           => [
+            'city'            => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.city'),
             ],
-            'district'       => [
+            'district'        => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.district'),
             ],
-            'postal_code'    => [
+            'postal_code'     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.postal_code'),
             ],
-            'phone'          => [
+            'phone'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.phone'),
             ],
-            'notes'          => [
+            'notes'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.notes'),
+            ],
+            'company_name'    => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_address.company_name'),
+            ],
+            'company_code'    => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_address.company_code'),
+            ],
+            'company_vat'     => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_address.company_vat'),
             ],
 
         ];
@@ -262,6 +274,9 @@ class HCECOrderAddressController extends HCBaseController
         array_set($data, 'record.postal_code', array_get($_data, 'postal_code'));
         array_set($data, 'record.phone', array_get($_data, 'phone'));
         array_set($data, 'record.notes', array_get($_data, 'notes'));
+        array_set($data, 'record.company_name', array_get($_data, 'company_name'));
+        array_set($data, 'record.company_code', array_get($_data, 'company_code'));
+        array_set($data, 'record.company_vat', array_get($_data, 'company_vat'));
 
         return $data;
     }

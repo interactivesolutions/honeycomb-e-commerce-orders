@@ -92,13 +92,33 @@ class HCECOrderAddressForm
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_address.postal_code"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "phone",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_address.phone"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],[
+                    "type"            => "singleLine",
+                    "fieldID"         => 'company_name',
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_address.company_name"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],[
+                    "type"            => "singleLine",
+                    "fieldID"         => 'company_code',
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_address.company_code"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],[
+                    "type"            => "singleLine",
+                    "fieldID"         => 'company_vat',
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_address.company_vat"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
                     "type"            => "textArea",
                     "fieldID"         => "notes",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_address.notes"),
