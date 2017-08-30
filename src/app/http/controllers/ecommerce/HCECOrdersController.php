@@ -129,6 +129,8 @@ class HCECOrdersController extends HCBaseController
 
         $record->update(array_get($data, 'record', []));
 
+        // TODO add order states fixation
+
         return $this->apiShow($record->id);
     }
 
