@@ -8,6 +8,7 @@ use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCar
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 
 class HCECOrders extends HCUuidModel
@@ -24,7 +25,7 @@ class HCECOrders extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'order_state_id', 'user_id', 'user_address_id', 'carrier_id', 'reference', 'payment', 'total_price', 'total_price_before_tax', 'total_discounts', 'total_discounts_before_tax', 'total_paid', 'total_paid_before_tax', 'shipping_price', 'shipping_price_before_tax', 'carrier_note', 'order_note'];
+    protected $fillable = ['id', 'order_state_id', 'user_id', 'reference', 'payment', 'total_price', 'total_price_before_tax', 'total_discounts', 'total_discounts_before_tax', 'total_paid', 'total_paid_before_tax', 'order_note'];
 
     /**
      * Relation to table
@@ -47,6 +48,16 @@ class HCECOrders extends HCUuidModel
     }
 
     /**
+     * Relation to details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function history()
+    {
+        return $this->hasMany(HCECOrderHistory::class, 'order_id', 'id');
+    }
+
+    /**
      * Relation to table
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -56,26 +67,6 @@ class HCECOrders extends HCUuidModel
         return $this->belongsTo(HCUsers::class, 'user_id', 'id');
     }
 
-    /**
-     * Relation to table
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user_address()
-    {
-        return $this->belongsTo(HCECUserAddress::class, 'user_address_id', 'id');
-    }
-
-    /**
-     * Relation to table
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function carrier()
-    {
-        return $this->belongsTo(HCECCarriers::class, 'carrier_id', 'id');
-    }
-    
     /**
      * Relation to table
      *

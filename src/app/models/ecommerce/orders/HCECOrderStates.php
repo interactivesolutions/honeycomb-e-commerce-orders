@@ -20,4 +20,14 @@ class HCECOrderStates extends HCMultiLanguageModel
      */
     protected $fillable = ['id'];
 
+    /**
+     * Relation to details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function history()
+    {
+        return $this->hasMany(HCECOrderHistory::class, 'order_state_id', 'id');
+    }
+
 }

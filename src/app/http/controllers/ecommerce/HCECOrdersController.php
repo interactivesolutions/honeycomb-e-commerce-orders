@@ -61,14 +61,6 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.user_id'),
             ],
-            'user_address.form_name'                => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.user_address_id'),
-            ],
-            'carrier.label'     => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_id'),
-            ],
             'reference'                             => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.reference'),
@@ -100,18 +92,6 @@ class HCECOrdersController extends HCBaseController
             'total_paid_before_tax'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
-            ],
-            'shipping_price'                        => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price'),
-            ],
-            'shipping_price_before_tax'             => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.shipping_price_before_tax'),
-            ],
-            'carrier_note'                          => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.carrier_note'),
             ],
             'order_note'                            => [
                 "type"  => "text",
@@ -212,7 +192,7 @@ class HCECOrdersController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order_state.translations', 'user', 'user_address', 'carrier'];
+        $with = ['order_state.translations', 'user'];
 
         if( $select == null )
             $select = HCECOrders::getFillableFields();
@@ -246,8 +226,6 @@ class HCECOrdersController extends HCBaseController
         return $query->where(function (Builder $query) use ($phrase) {
             $query->where('order_state_id', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('user_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('user_address_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('carrier_id', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('reference', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('payment', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_price', 'LIKE', '%' . $phrase . '%')
@@ -256,9 +234,6 @@ class HCECOrdersController extends HCBaseController
                 ->orWhere('total_discounts_before_tax', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_paid', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_paid_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('shipping_price', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('shipping_price_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('carrier_note', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('order_note', 'LIKE', '%' . $phrase . '%');
         });
     }
@@ -279,8 +254,6 @@ class HCECOrdersController extends HCBaseController
 
         array_set($data, 'record.order_state_id', array_get($_data, 'order_state_id'));
         array_set($data, 'record.user_id', array_get($_data, 'user_id'));
-        array_set($data, 'record.user_address_id', array_get($_data, 'user_address_id'));
-        array_set($data, 'record.carrier_id', array_get($_data, 'carrier_id'));
         array_set($data, 'record.reference', array_get($_data, 'reference'));
         array_set($data, 'record.payment', array_get($_data, 'payment'));
         array_set($data, 'record.total_price', array_get($_data, 'total_price'));
@@ -289,12 +262,9 @@ class HCECOrdersController extends HCBaseController
         array_set($data, 'record.total_discounts_before_tax', array_get($_data, 'total_discounts_before_tax'));
         array_set($data, 'record.total_paid', array_get($_data, 'total_paid'));
         array_set($data, 'record.total_paid_before_tax', array_get($_data, 'total_paid_before_tax'));
-        array_set($data, 'record.shipping_price', array_get($_data, 'shipping_price'));
-        array_set($data, 'record.shipping_price_before_tax', array_get($_data, 'shipping_price_before_tax'));
-        array_set($data, 'record.carrier_note', array_get($_data, 'carrier_note'));
         array_set($data, 'record.order_note', array_get($_data, 'order_note'));
 
-        return $data;
+        return makeEmptyNullable($data);
     }
 
     /**

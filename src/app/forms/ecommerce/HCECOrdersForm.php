@@ -60,31 +60,6 @@ class HCECOrdersForm
                     ],
                 ],
                 [
-                    "type"            => "dropDownList",
-                    "fieldID"         => "user_address_id",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.user_address_id"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "options"         => HCECUserAddress::select('id', 'form_name')->get(),
-                    "search"          => [
-                        "maximumSelectionLength" => 1,
-                        "minimumSelectionLength" => 1,
-                        "showNodes"              => ["form_name"],
-                    ],
-                ],
-                [
-                    "type"            => "dropDownList",
-                    "fieldID"         => "carrier_id",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.carrier_id"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
-                    "options"         => HCECCarriers::select('id', 'label')->get(),
-                    "search"          => [
-                        "showNodes"              => ['label'],
-                        "maximumSelectionLength" => 1,
-                    ],
-                ],
-                [
                     "type"            => "singleLine",
                     "fieldID"         => "reference",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.reference"),
@@ -130,24 +105,6 @@ class HCECOrdersForm
                     "type"            => "singleLine",
                     "fieldID"         => "total_paid_before_tax",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.total_paid_before_tax"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "shipping_price",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.shipping_price"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "shipping_price_before_tax",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.shipping_price_before_tax"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "carrier_note",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.carrier_note"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                 ], [
