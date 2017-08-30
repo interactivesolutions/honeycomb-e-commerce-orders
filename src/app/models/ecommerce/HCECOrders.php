@@ -6,6 +6,7 @@ use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 
@@ -83,6 +84,16 @@ class HCECOrders extends HCUuidModel
     public function order_address()
     {
         return $this->hasOne(HCECOrderAddress::class, 'order_id', 'id');
+    }
+
+    /**
+     * Relation to table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_carriers()
+    {
+        return $this->hasOne(HCECOrderCarriers::class, 'order_id', 'id');
     }
 
 }
