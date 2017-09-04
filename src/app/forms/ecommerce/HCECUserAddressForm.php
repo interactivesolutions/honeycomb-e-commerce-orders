@@ -148,7 +148,14 @@ class HCECUserAddressForm
             return $form;
 
         //Make changes to edit form if needed
-        // $form['structure'][] = [];
+        $form['structure'][] = [
+            "type"            => "singleLine",
+            "fieldID"         => "cart_id",
+            "label"           => trans("HCECommerceOrders::e_commerce_address.cart_id"),
+            "readonly"        => 1,
+            "required"        => 0,
+            "requiredVisible" => 0,
+        ];
 
         return $form;
     }

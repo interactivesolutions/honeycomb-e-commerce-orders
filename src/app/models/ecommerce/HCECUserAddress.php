@@ -20,7 +20,7 @@ class HCECUserAddress extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'form_name', 'first_name', 'last_name', 'email', 'country_id', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes', 'company_name', 'company_code', 'company_vat'];
+    protected $fillable = ['id', 'user_id', 'cart_id', 'form_name', 'first_name', 'last_name', 'email', 'country_id', 'street_address', 'city', 'district', 'postal_code', 'phone', 'notes', 'company_name', 'company_code', 'company_vat'];
 
     /**
      * Relation to table
@@ -40,5 +40,15 @@ class HCECUserAddress extends HCUuidModel
     public function country()
     {
         return $this->belongsTo(HCCountries::class, 'country_id', 'id');
+    }
+
+    /**
+     * Relation to cart table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cart()
+    {
+        return $this->belongsTo(HCECCarts::class, 'cart_id', 'id');
     }
 }

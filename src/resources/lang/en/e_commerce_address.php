@@ -16,4 +16,5 @@ return [
     'company_name'   => 'Company name',
     'company_code'   => 'Company code',
     'company_vat'    => 'Company vat',
+    'cart_id'        => 'Cart',
 ];
