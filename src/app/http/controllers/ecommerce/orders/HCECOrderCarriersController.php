@@ -230,7 +230,12 @@ class HCECOrderCarriersController extends HCBaseController
                 ->orWhere('tax_name', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('tax_value', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('user_note', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('tracking_number', 'LIKE', '%' . $phrase . '%');
+                ->orWhere('tracking_number', 'LIKE', '%' . $phrase . '%')
+                ->orWhereHas('order', function ($query) use ($phrase) {
+                    $query->where('reference', 'LIKE', '%' . $phrase . '%');
+                })->orWhereHas('carrier', function ($query) use ($phrase) {
+                    $query->where('label', 'LIKE', '%' . $phrase . '%');
+                });
         });
     }
 
