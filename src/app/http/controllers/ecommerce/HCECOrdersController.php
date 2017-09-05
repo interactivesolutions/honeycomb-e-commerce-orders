@@ -236,7 +236,9 @@ class HCECOrdersController extends HCBaseController
                 ->orWhere('total_discounts_before_tax', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_paid', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_paid_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('order_note', 'LIKE', '%' . $phrase . '%');
+                ->orWhere('order_note', 'LIKE', '%' . $phrase . '%')->orWhereHas('user', function ($query) use ($phrase) {
+                    $query->where('email', 'LIKE', '%' . $phrase . '%');
+                });
         });
     }
 
