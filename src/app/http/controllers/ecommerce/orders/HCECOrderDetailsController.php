@@ -244,7 +244,12 @@ class HCECOrderDetailsController extends HCBaseController
                 ->orWhere('price', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('price_before_tax', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('total_price', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('total_price_before_tax', 'LIKE', '%' . $phrase . '%');
+                ->orWhere('total_price_before_tax', 'LIKE', '%' . $phrase . '%')
+                ->orWhereHas('order', function ($query) use ($phrase) {
+                    $query->where('reference', 'LIKE', '%' . $phrase . '%');
+                })->orWhereHas('warehouse', function ($query) use ($phrase) {
+                    $query->where('name', 'LIKE', '%' . $phrase . '%');
+                });
         });
     }
 
