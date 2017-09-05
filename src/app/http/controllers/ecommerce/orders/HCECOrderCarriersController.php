@@ -93,7 +93,10 @@ class HCECOrderCarriersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_carriers.user_note'),
             ],
-
+            'tracking_number'           => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_carriers.tracking_number'),
+            ],
         ];
     }
 
@@ -224,12 +227,10 @@ class HCECOrderCarriersController extends HCBaseController
                 ->orWhere('carrier_id', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('name', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('weight', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('shipping_price', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('shipping_price_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('shipping_tax_amount', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('tax_name', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('tax_value', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('user_note', 'LIKE', '%' . $phrase . '%');
+                ->orWhere('user_note', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('tracking_number', 'LIKE', '%' . $phrase . '%');
         });
     }
 
@@ -257,6 +258,7 @@ class HCECOrderCarriersController extends HCBaseController
         array_set($data, 'record.tax_name', array_get($_data, 'tax_name'));
         array_set($data, 'record.tax_value', array_get($_data, 'tax_value'));
         array_set($data, 'record.user_note', array_get($_data, 'user_note'));
+        array_set($data, 'record.tracking_number', array_get($_data, 'tracking_number'));
 
         return makeEmptyNullable($data);
     }

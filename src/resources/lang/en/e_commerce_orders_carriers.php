@@ -11,5 +11,5 @@ return [
     'tax_name'                  => 'Tax name',
     'tax_value'                 => 'Tax value',
     'user_note'                 => 'User note',
-
+    'tracking_number'           => 'Tracking number',
 ];

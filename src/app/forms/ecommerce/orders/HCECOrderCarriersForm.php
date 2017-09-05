@@ -43,7 +43,8 @@ class HCECOrderCarriersForm
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["reference"],
                     ],
-                ],[
+                ],
+                [
                     "type"            => "dropDownList",
                     "fieldID"         => "carrier_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.carrier_id"),
@@ -55,55 +56,70 @@ class HCECOrderCarriersForm
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["label"],
                     ],
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "name",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.name"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "weight",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.weight"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "shipping_price",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.shipping_price"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "shipping_price_before_tax",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.shipping_price_before_tax"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "shipping_tax_amount",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.shipping_tax_amount"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "tax_name",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.tax_name"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "tax_value",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.tax_value"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "textArea",
                     "fieldID"         => "user_note",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.user_note"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "rows"            => 5,
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "tracking_number",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.tracking_number"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
                 ],
             ],
         ];
