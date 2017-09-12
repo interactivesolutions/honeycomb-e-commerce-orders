@@ -19,14 +19,17 @@ class HCECOrderPaymentStatusSeed extends Seeder
                 'id' => 'awaiting-bank-wire-payment',
             ],
             [
-                'id' => 'payment-in-progress',
-            ],
-            [
                 'id' => 'payment-accepted',
             ],
             [
                 'id' => 'payment-failed',
             ],
+//            [
+//                'id' => 'awaiting-paysera-payment',
+//            ],
+//            [
+//                'id' => 'paysera-payment-in-progress',
+//            ],
         ];
 
         foreach ( $statuses as $key => $status ) {

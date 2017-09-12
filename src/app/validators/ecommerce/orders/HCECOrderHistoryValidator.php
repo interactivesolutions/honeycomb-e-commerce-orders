@@ -1,4 +1,6 @@
-<?php namespace interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders;
+<?php
+
+namespace interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders;
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 
@@ -12,9 +14,10 @@ class HCECOrderHistoryValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'order_id' => 'required',
-'order_state_id' => 'required',
-
+            'order_id'                => 'required',
+            'type'                    => 'required|in:order-state,payment-status',
+            'order_state_id'          => 'required_if:type,order-state',
+            'order_payment_status_id' => 'required_if:type,payment-status',
         ];
     }
 }

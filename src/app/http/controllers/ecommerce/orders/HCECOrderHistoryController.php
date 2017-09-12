@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders\HCECOrderHistoryValidator;
 
 class HCECOrderHistoryController extends HCBaseController
@@ -29,16 +30,16 @@ class HCECOrderHistoryController extends HCBaseController
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_create') )
-            $config['actions'][] = 'new';
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_create') )
+//            $config['actions'][] = 'new';
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_update') ) {
-            $config['actions'][] = 'update';
-            $config['actions'][] = 'restore';
-        }
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_update') ) {
+//            $config['actions'][] = 'update';
+//            $config['actions'][] = 'restore';
+//        }
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_delete') )
-            $config['actions'][] = 'delete';
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_history_delete') )
+//            $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
         $config['filters'] = $this->getFilters();
@@ -62,9 +63,17 @@ class HCECOrderHistoryController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_history.order_id'),
             ],
+            'type_translated'       => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_history.type'),
+            ],
             'order_state.title' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
+            ],
+            'order_payment_status.title' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_history.order_payment_status_id'),
             ],
             'note'           => [
                 "type"  => "text",
@@ -164,7 +173,7 @@ class HCECOrderHistoryController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order', 'order_state'];
+        $with = ['order', 'order_state', 'order_payment_status'];
 
         if( $select == null )
             $select = HCECOrderHistory::getFillableFields();
@@ -219,10 +228,12 @@ class HCECOrderHistoryController extends HCBaseController
             array_set($data, 'record.id', array_get($_data, 'id'));
 
         array_set($data, 'record.order_id', array_get($_data, 'order_id'));
+        array_set($data, 'record.type', array_get($_data, 'type'));
         array_set($data, 'record.order_state_id', array_get($_data, 'order_state_id'));
+        array_set($data, 'record.order_payment_status_id', array_get($_data, 'order_payment_status_id'));
         array_set($data, 'record.note', array_get($_data, 'note'));
 
-        return $data;
+        return makeEmptyNullable($data);
     }
 
     /**
@@ -254,7 +265,15 @@ class HCECOrderHistoryController extends HCBaseController
     {
         $filters = [];
 
-        $types = [
+        $orderPaymentStatus= [
+            'fieldID'   => 'order_payment_status_id',
+            'type'      => 'dropDownList',
+            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_payment_status_id'),
+            'options'   => HCECOrderPaymentStatus::select('id')->get()->toArray(),
+            'showNodes' => ['title'],
+        ];
+
+        $orderStates= [
             'fieldID'   => 'order_state_id',
             'type'      => 'dropDownList',
             'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
@@ -262,7 +281,8 @@ class HCECOrderHistoryController extends HCBaseController
             'showNodes' => ['title'],
         ];
 
-        $filters[] = addAllOptionToDropDownList($types);
+        $filters[] = addAllOptionToDropDownList($orderPaymentStatus);
+        $filters[] = addAllOptionToDropDownList($orderStates);
 
         return $filters;
     }

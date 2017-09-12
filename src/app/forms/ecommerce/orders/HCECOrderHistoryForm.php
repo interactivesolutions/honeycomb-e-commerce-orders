@@ -3,7 +3,9 @@
 namespace interactivesolutions\honeycombecommerceorders\app\forms\ecommerce\orders;
 
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECOrders;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
 
 class HCECOrderHistoryForm
 {
@@ -45,6 +47,14 @@ class HCECOrderHistoryForm
                     ],
                 ],
                 [
+                    "type"            => "radioList",
+                    "fieldID"         => "type",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_history.type"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => HCECOrderHistory::getTableEnumList('type', 'label', 'HCECommerceOrders::e_commerce_orders_history.types.'),
+                ],
+                [
                     "type"            => "dropDownList",
                     "fieldID"         => "order_state_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders_history.order_state_id"),
@@ -55,6 +65,31 @@ class HCECOrderHistoryForm
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["title"],
+                    ],
+                    "dependencies"    => [
+                        [
+                            'field_id'    => 'type',
+                            'field_value' => 'order-state',
+                        ],
+                    ],
+                ],
+                [
+                    "type"            => "dropDownList",
+                    "fieldID"         => "order_payment_status_id",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_history.order_payment_status_id"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => HCECOrderPaymentStatus::get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["title"],
+                    ],
+                    "dependencies"    => [
+                        [
+                            'field_id'    => 'type',
+                            'field_value' => 'payment-status',
+                        ],
                     ],
                 ],
                 [

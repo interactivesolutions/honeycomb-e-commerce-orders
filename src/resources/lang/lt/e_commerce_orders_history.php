@@ -1,7 +1,14 @@
 <?php
 return [
-    'page_title'     => 'Užsakymo istorija',
-    'order_id'       => 'Užsakymas',
-    'order_state_id' => 'Užsakymo būsena',
-    'note'           => 'Pastabos',
+    'page_title'           => 'Užsakymo istorija',
+    'order_id'             => 'Užsakymas',
+    'type'                 => 'Tipas',
+    'order_state_id'       => 'Užsakymo būsena',
+    'order_payment_status' => 'Užsakymo apmokėjimo statusas',
+    'note'                 => 'Pastabos',
+
+    'types' => [
+        'order-state'    => 'Užsakymo busena',
+        'payment-status' => 'Apmokėjimo statusas',
+    ],
 ];
