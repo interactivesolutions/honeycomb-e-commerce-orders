@@ -39,11 +39,11 @@ class HCECOrdersForm
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.order_state_id"),
                     "required"        => 1,
                     "requiredVisible" => 1,
-                    "options"         => HCECOrderStates::with('translations')->get(),
+                    "options"         => HCECOrderStates::get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
-                        "showNodes"              => ["translations.{lang}.label"],
+                        "showNodes"              => ["title"],
                     ],
                 ],
                 [

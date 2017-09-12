@@ -8,7 +8,7 @@ class HCECOrderStatesForm
     protected $formID = 'e-commerce-orders-states';
 
     // is form multi language
-    protected $multiLanguage = 1;
+    protected $multiLanguage = 0;
 
     /**
      * Creating form
@@ -29,29 +29,19 @@ class HCECOrderStatesForm
             ],
             'structure'  => [
                 [
-    "type"            => "singleLine",
-    "fieldID"         => "translations.label",
-    "label"           => trans("HCECommerceOrders::e_commerce_orders_states.label"),
-    "required"        => 1,
-    "requiredVisible" => 1,
-    "tabID"           => trans('HCTranslations::core.translations'),
-    "multiLanguage"   => 1,
-],[
-    "type"            => "singleLine",
-    "fieldID"         => "translations.description",
-    "label"           => trans("HCECommerceOrders::e_commerce_orders_states.description"),
-    "required"        => 0,
-    "requiredVisible" => 0,
-    "tabID"           => trans('HCTranslations::core.translations'),
-    "multiLanguage"   => 1,
-],
+                    "type"            => "singleLine",
+                    "fieldID"         => "title",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_states.title"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
             ],
         ];
 
-        if ($this->multiLanguage)
+        if( $this->multiLanguage )
             $form['availableLanguages'] = getHCContentLanguages();
 
-        if (!$edit)
+        if( ! $edit )
             return $form;
 
         //Make changes to edit form if needed

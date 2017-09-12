@@ -53,7 +53,7 @@ class HCECOrdersController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'order_state.translations.{lang}.label' => [
+            'order_state.title' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
             ],
@@ -206,7 +206,7 @@ class HCECOrdersController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order_state.translations', 'user'];
+        $with = ['order_state', 'user'];
 
         if( $select == null )
             $select = HCECOrders::getFillableFields();

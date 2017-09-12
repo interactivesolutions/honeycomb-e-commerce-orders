@@ -5,6 +5,7 @@ namespace interactivesolutions\honeycombecommerceorders\app\http\controllers\eco
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders\HCECOrderHistoryValidator;
 
 class HCECOrderHistoryController extends HCBaseController
@@ -61,7 +62,7 @@ class HCECOrderHistoryController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_history.order_id'),
             ],
-            'order_state.translations.{lang}.label' => [
+            'order_state.title' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
             ],
@@ -163,7 +164,7 @@ class HCECOrderHistoryController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order', 'order_state.translations'];
+        $with = ['order', 'order_state'];
 
         if( $select == null )
             $select = HCECOrderHistory::getFillableFields();
@@ -252,6 +253,16 @@ class HCECOrderHistoryController extends HCBaseController
     public function getFilters()
     {
         $filters = [];
+
+        $types = [
+            'fieldID'   => 'order_state_id',
+            'type'      => 'dropDownList',
+            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
+            'options'   => HCECOrderStates::select('id')->get()->toArray(),
+            'showNodes' => ['title'],
+        ];
+
+        $filters[] = addAllOptionToDropDownList($types);
 
         return $filters;
     }

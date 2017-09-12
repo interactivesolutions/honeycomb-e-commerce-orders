@@ -1,11 +1,11 @@
-<?php namespace interactivesolutions\honeycombecommerceorders\app\http\controllers\ecommerce\orders;
+<?php
+
+namespace interactivesolutions\honeycombecommerceorders\app\http\controllers\ecommerce\orders;
 
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
-use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStatesTranslations;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders\HCECOrderStatesValidator;
-use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders\HCECOrderStatesTranslationsValidator;
 
 class HCECOrderStatesController extends HCBaseController
 {
@@ -28,16 +28,16 @@ class HCECOrderStatesController extends HCBaseController
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_create') )
-            $config['actions'][] = 'new';
-
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_update') ) {
-            $config['actions'][] = 'update';
-            $config['actions'][] = 'restore';
-        }
-
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_delete') )
-            $config['actions'][] = 'delete';
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_create') )
+//            $config['actions'][] = 'new';
+//
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_update') ) {
+//            $config['actions'][] = 'update';
+//            $config['actions'][] = 'restore';
+//        }
+//
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_states_delete') )
+//            $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
         $config['filters'] = $this->getFilters();
@@ -53,15 +53,10 @@ class HCECOrderStatesController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'translations.{lang}.label'       => [
+            'title'       => [
                 "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_states.label'),
+                "label" => trans('HCECommerceOrders::e_commerce_orders_states.title'),
             ],
-            'translations.{lang}.description' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_states.description'),
-            ],
-
         ];
     }
 
@@ -75,7 +70,6 @@ class HCECOrderStatesController extends HCBaseController
         $data = $this->getInputData();
 
         $record = HCECOrderStates::create(array_get($data, 'record', []));
-        $record->updateTranslations(array_get($data, 'translations', []));
 
         return $this->apiShow($record->id);
     }
@@ -93,7 +87,6 @@ class HCECOrderStatesController extends HCBaseController
         $data = $this->getInputData();
 
         $record->update(array_get($data, 'record', []));
-        $record->updateTranslations(array_get($data, 'translations', []));
 
         return $this->apiShow($record->id);
     }
@@ -119,7 +112,6 @@ class HCECOrderStatesController extends HCBaseController
      */
     protected function __apiDestroy(array $list)
     {
-        HCECOrderStatesTranslations::destroy(HCECOrderStatesTranslations::whereIn('record_id', $list)->pluck('id')->toArray());
         HCECOrderStates::destroy($list);
 
         return hcSuccess();
@@ -133,7 +125,6 @@ class HCECOrderStatesController extends HCBaseController
      */
     protected function __apiForceDelete(array $list)
     {
-        HCECOrderStatesTranslations::onlyTrashed()->whereIn('record_id', $list)->forceDelete();
         HCECOrderStates::onlyTrashed()->whereIn('id', $list)->forceDelete();
 
         return hcSuccess();
@@ -147,7 +138,6 @@ class HCECOrderStatesController extends HCBaseController
      */
     protected function __apiRestore(array $list)
     {
-        HCECOrderStatesTranslations::onlyTrashed()->whereIn('record_id', $list)->restore();
         HCECOrderStates::onlyTrashed()->whereIn('id', $list)->restore();
 
         return hcSuccess();
@@ -161,7 +151,7 @@ class HCECOrderStatesController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['translations'];
+        $with = [];
 
         if( $select == null )
             $select = HCECOrderStates::getFillableFields(true);
@@ -192,16 +182,9 @@ class HCECOrderStatesController extends HCBaseController
      */
     protected function searchQuery(Builder $query, string $phrase)
     {
-        $r = HCECOrderStates::getTableName();
-        $t = HCECOrderStatesTranslations::getTableName();
-
-        $query->where(function (Builder $query) use ($phrase) {
-            $query;
+        return $query->where(function (Builder $query) use ($phrase) {
+            $query->where('id', 'LIKE', '%' . $phrase . '%');
         });
-
-        return $query->join($t, "$r.id", "=", "$t.record_id")
-            ->where('label', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('description', 'LIKE', '%' . $phrase . '%');
     }
 
     /**
@@ -212,21 +195,11 @@ class HCECOrderStatesController extends HCBaseController
     protected function getInputData()
     {
         (new HCECOrderStatesValidator())->validateForm();
-        (new HCECOrderStatesTranslationsValidator())->validateForm();
 
         $_data = request()->all();
 
         if( array_has($_data, 'id') )
             array_set($data, 'record.id', array_get($_data, 'id'));
-
-
-        $translations = array_get($_data, 'translations');
-
-        foreach ( $translations as &$value )
-            if( ! isset($value['slug']) || $value['slug'] == "" )
-                $value['slug'] = generateHCSlug("e-commerce/orders/states", $value['label']);
-
-        array_set($data, 'translations', $translations);
 
         return makeEmptyNullable($data);
     }
@@ -239,7 +212,7 @@ class HCECOrderStatesController extends HCBaseController
      */
     public function apiShow(string $id)
     {
-        $with = ['translations'];
+        $with = [];
 
         $select = HCECOrderStates::getFillableFields(true);
 

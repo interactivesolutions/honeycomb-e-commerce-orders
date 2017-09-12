@@ -2,9 +2,9 @@
 
 namespace interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders;
 
-use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
+use interactivesolutions\honeycombcore\models\HCUuidModel;
 
-class HCECOrderStates extends HCMultiLanguageModel
+class HCECOrderStates extends HCUuidModel
 {
     /**
      * The database table used by the model.
@@ -19,6 +19,23 @@ class HCECOrderStates extends HCMultiLanguageModel
      * @var array
      */
     protected $fillable = ['id'];
+
+    /**
+     * Appends title
+     *
+     * @var array
+     */
+    protected $appends = ['title'];
+
+    /**
+     * Title attribute
+     *
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function getTitleAttribute()
+    {
+        return trans('HCECommerceOrders::e_commerce_orders_states.' . $this->id);
+    }
 
     /**
      * Relation to details
