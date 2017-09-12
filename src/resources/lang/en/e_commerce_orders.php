@@ -2,6 +2,7 @@
 return [
     'page_title'                 => 'Orders',
     'order_state_id'             => 'Order state',
+    'order_payment_status_id'    => 'Order payment status',
     'user_id'                    => 'User',
     'reference'                  => 'Reference',
     'payment'                    => 'Payment',

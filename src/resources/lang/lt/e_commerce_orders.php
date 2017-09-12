@@ -2,7 +2,8 @@
 return [
     'page_title'                 => 'Užsakymai',
     'order_state_id'             => 'Užsakymo būsena',
-    'user_id'                    => 'Varototjas',
+    'order_payment_status_id'    => 'Užsakymo apmokėjimo statusas',
+    'user_id'                    => 'Vartotojas',
     'reference'                  => 'Užsakymo kodas',
     'payment'                    => 'Mokėjimo būdas',
     'total_price'                => 'Viso kaina',

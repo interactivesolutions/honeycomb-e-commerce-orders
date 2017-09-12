@@ -6,6 +6,7 @@ use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECUserAddress;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
 
 class HCECOrdersForm
 {
@@ -40,6 +41,19 @@ class HCECOrdersForm
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => HCECOrderStates::get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["title"],
+                    ],
+                ],
+                [
+                    "type"            => "dropDownList",
+                    "fieldID"         => "order_payment_status_id",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.order_payment_status_id"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => HCECOrderPaymentStatus::get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,

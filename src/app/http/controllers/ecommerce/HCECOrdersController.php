@@ -5,6 +5,8 @@ namespace interactivesolutions\honeycombecommerceorders\app\http\controllers\eco
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECOrders;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\HCECOrdersValidator;
 
 class HCECOrdersController extends HCBaseController
@@ -56,6 +58,10 @@ class HCECOrdersController extends HCBaseController
             'order_state.title' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
+            ],
+            'order_payment_status.title' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_payment_status_id'),
             ],
             'user.email'                            => [
                 "type"  => "text",
@@ -109,7 +115,6 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
             ],
-
         ];
     }
 
@@ -206,7 +211,7 @@ class HCECOrdersController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order_state', 'user'];
+        $with = ['order_state', 'order_payment_status', 'user'];
 
         if( $select == null )
             $select = HCECOrders::getFillableFields();
@@ -269,6 +274,7 @@ class HCECOrdersController extends HCBaseController
             array_set($data, 'record.id', array_get($_data, 'id'));
 
         array_set($data, 'record.order_state_id', array_get($_data, 'order_state_id'));
+        array_set($data, 'record.order_payment_status_id', array_get($_data, 'order_payment_status_id'));
         array_set($data, 'record.user_id', array_get($_data, 'user_id'));
         array_set($data, 'record.reference', array_get($_data, 'reference'));
         array_set($data, 'record.payment', array_get($_data, 'payment'));
@@ -314,6 +320,25 @@ class HCECOrdersController extends HCBaseController
     public function getFilters()
     {
         $filters = [];
+
+        $orderPaymentStatus= [
+            'fieldID'   => 'order_payment_status_id',
+            'type'      => 'dropDownList',
+            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_payment_status_id'),
+            'options'   => HCECOrderPaymentStatus::select('id')->get()->toArray(),
+            'showNodes' => ['title'],
+        ];
+
+        $orderStates= [
+            'fieldID'   => 'order_state_id',
+            'type'      => 'dropDownList',
+            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
+            'options'   => HCECOrderStates::select('id')->get()->toArray(),
+            'showNodes' => ['title'],
+        ];
+
+        $filters[] = addAllOptionToDropDownList($orderPaymentStatus);
+        $filters[] = addAllOptionToDropDownList($orderStates);
 
         return $filters;
     }
