@@ -7,8 +7,9 @@ return [
     'awaiting-bank-wire-payment' => 'Laukiama apmokėjimo pavedimu',
     'payment-accepted'           => 'Mokėjimas gautas',
 
+    'ready-for-processing'   => 'Užsakymas paruoštas vykdymui',
     'processing-in-progress' => 'Užsakymas vykdomas',
     'shipped'                => 'Užsakymas išsiųstas',
-    'delivered'              => 'Pristatyta',
+    'delivered'              => 'Pristatytas',
     'canceled'               => 'Atšauktas',
 ];
