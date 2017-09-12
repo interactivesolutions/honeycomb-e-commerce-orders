@@ -1,4 +1,5 @@
 <?php
+
 namespace interactivesolutions\honeycombecommerceorders\database\seeds;
 
 use Illuminate\Database\Seeder;
@@ -13,5 +14,6 @@ class HoneyCombDatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(HCECOrderStatesSeed::class);
+        $this->call(HCECOrderPaymentStatusSeed::class);
     }
 }
