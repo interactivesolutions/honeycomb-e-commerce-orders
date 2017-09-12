@@ -267,24 +267,15 @@ class HCECOrderHistoryController extends HCBaseController
     {
         $filters = [];
 
-        $orderPaymentStatus= [
-            'fieldID'   => 'order_payment_status_id',
+        $type= [
+            'fieldID'   => 'type',
             'type'      => 'dropDownList',
-            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_payment_status_id'),
-            'options'   => HCECOrderPaymentStatus::select('id')->get()->toArray(),
-            'showNodes' => ['title'],
+            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.type'),
+            'options'   =>HCECOrderHistory::getTableEnumList('type', 'label', 'HCECommerceOrders::e_commerce_orders_history.types.'),
+            'showNodes' => ['label'],
         ];
 
-        $orderStates= [
-            'fieldID'   => 'order_state_id',
-            'type'      => 'dropDownList',
-            'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
-            'options'   => HCECOrderStates::select('id')->get()->toArray(),
-            'showNodes' => ['title'],
-        ];
-
-        $filters[] = addAllOptionToDropDownList($orderPaymentStatus);
-        $filters[] = addAllOptionToDropDownList($orderStates);
+        $filters[] = addAllOptionToDropDownList($type);
 
         return $filters;
     }
