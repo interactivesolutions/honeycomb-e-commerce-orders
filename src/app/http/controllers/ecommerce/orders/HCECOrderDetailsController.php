@@ -65,7 +65,7 @@ class HCECOrderDetailsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.combination_id'),
             ],
-            'warehouse.name'                   => [
+            'warehouse.name'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.warehouse_id'),
             ],
@@ -97,6 +97,10 @@ class HCECOrderDetailsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_before_tax'),
             ],
+            'price_tax_amount'               => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_tax_amount'),
+            ],
             'total_price'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price'),
@@ -104,6 +108,10 @@ class HCECOrderDetailsController extends HCBaseController
             'total_price_before_tax'         => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_before_tax'),
+            ],
+            'total_price_tax_amount'         => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_tax_amount'),
             ],
 
         ];
@@ -278,8 +286,10 @@ class HCECOrderDetailsController extends HCBaseController
         array_set($data, 'record.name', array_get($_data, 'name'));
         array_set($data, 'record.price', array_get($_data, 'price'));
         array_set($data, 'record.price_before_tax', array_get($_data, 'price_before_tax'));
+        array_set($data, 'record.price_tax_amount', array_get($_data, 'price_tax_amount'));
         array_set($data, 'record.total_price', array_get($_data, 'total_price'));
         array_set($data, 'record.total_price_before_tax', array_get($_data, 'total_price_before_tax'));
+        array_set($data, 'record.total_price_tax_amount', array_get($_data, 'total_price_tax_amount'));
 
         return $data;
     }

@@ -83,16 +83,32 @@ class HCECOrdersForm
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.total_price_before_tax"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "total_price_tax_amount",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.total_price_tax_amount"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "total_discounts",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.total_discounts"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "total_discounts_before_tax",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.total_discounts_before_tax"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "total_discounts_tax_amount",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.total_discounts_tax_amount"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                 ], [
@@ -105,6 +121,13 @@ class HCECOrdersForm
                     "type"            => "singleLine",
                     "fieldID"         => "total_paid_before_tax",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.total_paid_before_tax"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "total_paid_tax_amount",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.total_paid_tax_amount"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                 ], [

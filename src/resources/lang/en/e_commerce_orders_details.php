@@ -13,6 +13,8 @@ return [
     'name'                   => 'Name',
     'price'                  => 'Price',
     'price_before_tax'       => 'Price before tax',
+    'price_tax_amount'       => 'Price tax amount',
     'total_price'            => 'Total price',
     'total_price_before_tax' => 'Total price before tax',
+    'total_price_tax_amount' => 'Total price tax amount',
 ];

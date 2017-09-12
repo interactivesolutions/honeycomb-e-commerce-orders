@@ -77,6 +77,10 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
             ],
+            'total_price_tax_amount'                => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_tax_amount'),
+            ],
             'total_discounts'                       => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts'),
@@ -85,6 +89,10 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
             ],
+            'total_discounts_tax_amount'            => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_tax_amount'),
+            ],
             'total_paid'                            => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid'),
@@ -92,6 +100,10 @@ class HCECOrdersController extends HCBaseController
             'total_paid_before_tax'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
+            ],
+            'total_paid_tax_amount'                 => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_tax_amount'),
             ],
             'order_note'                            => [
                 "type"  => "text",
@@ -262,10 +274,13 @@ class HCECOrdersController extends HCBaseController
         array_set($data, 'record.payment', array_get($_data, 'payment'));
         array_set($data, 'record.total_price', array_get($_data, 'total_price'));
         array_set($data, 'record.total_price_before_tax', array_get($_data, 'total_price_before_tax'));
+        array_set($data, 'record.total_price_tax_amount', array_get($_data, 'total_price_tax_amount'));
         array_set($data, 'record.total_discounts', array_get($_data, 'total_discounts'));
         array_set($data, 'record.total_discounts_before_tax', array_get($_data, 'total_discounts_before_tax'));
+        array_set($data, 'record.total_discounts_tax_amount', array_get($_data, 'total_discounts_tax_amount'));
         array_set($data, 'record.total_paid', array_get($_data, 'total_paid'));
         array_set($data, 'record.total_paid_before_tax', array_get($_data, 'total_paid_before_tax'));
+        array_set($data, 'record.total_paid_tax_amount', array_get($_data, 'total_paid_tax_amount'));
         array_set($data, 'record.order_note', array_get($_data, 'order_note'));
 
         return makeEmptyNullable($data);
