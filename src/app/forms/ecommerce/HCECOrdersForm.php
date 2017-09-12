@@ -36,11 +36,11 @@ class HCECOrdersForm
             'structure'  => [
                 [
                     "type"            => "dropDownList",
-                    "fieldID"         => "order_state_id",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.order_state_id"),
+                    "fieldID"         => "order_payment_status_id",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.order_payment_status_id"),
                     "required"        => 1,
                     "requiredVisible" => 1,
-                    "options"         => HCECOrderStates::get(),
+                    "options"         => HCECOrderPaymentStatus::get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
@@ -49,11 +49,11 @@ class HCECOrdersForm
                 ],
                 [
                     "type"            => "dropDownList",
-                    "fieldID"         => "order_payment_status_id",
-                    "label"           => trans("HCECommerceOrders::e_commerce_orders.order_payment_status_id"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
-                    "options"         => HCECOrderPaymentStatus::get(),
+                    "fieldID"         => "order_state_id",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders.order_state_id"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "options"         => HCECOrderStates::get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,

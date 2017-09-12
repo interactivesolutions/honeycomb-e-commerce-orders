@@ -14,7 +14,7 @@ class AddOrderPaymentStatusIdToHcOrdersTable extends Migration
     public function up()
     {
         Schema::table('hc_orders', function (Blueprint $table) {
-            $table->string('order_payment_status_id', 36)->nullable();
+            $table->string('order_payment_status_id', 36)->nullable()->after('order_state_id');
 
             $table->foreign('order_payment_status_id')->references('id')->on('hc_order_payment_status')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });

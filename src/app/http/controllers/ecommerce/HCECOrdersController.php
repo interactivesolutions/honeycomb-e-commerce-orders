@@ -7,6 +7,7 @@ use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECOrders;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
+use interactivesolutions\honeycombecommerceorders\app\services\HCOrderService;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\HCECOrdersValidator;
 
 class HCECOrdersController extends HCBaseController
@@ -55,63 +56,63 @@ class HCECOrdersController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'order_state.title' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
-            ],
             'order_payment_status.title' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_payment_status_id'),
             ],
-            'user.email'                            => [
+            'order_state.title'          => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
+            ],
+            'user.email'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.user_id'),
             ],
-            'reference'                             => [
+            'reference'                  => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.reference'),
             ],
-            'payment'                               => [
+            'payment'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.payment'),
             ],
-            'total_price'                           => [
+            'total_price'                => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_price'),
             ],
-            'total_price_before_tax'                => [
+            'total_price_before_tax'     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
             ],
-            'total_price_tax_amount'                => [
+            'total_price_tax_amount'     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_tax_amount'),
             ],
-            'total_discounts'                       => [
+            'total_discounts'            => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts'),
             ],
-            'total_discounts_before_tax'            => [
+            'total_discounts_before_tax' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
             ],
-            'total_discounts_tax_amount'            => [
+            'total_discounts_tax_amount' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_tax_amount'),
             ],
-            'total_paid'                            => [
+            'total_paid'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid'),
             ],
-            'total_paid_before_tax'                 => [
+            'total_paid_before_tax'      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
             ],
-            'total_paid_tax_amount'                 => [
+            'total_paid_tax_amount'      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_tax_amount'),
             ],
-            'order_note'                            => [
+            'order_note'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
             ],
@@ -146,7 +147,7 @@ class HCECOrdersController extends HCBaseController
 
         $record->update(array_get($data, 'record', []));
 
-        // TODO add order states fixation
+        (new HCOrderService())->handleUpdate($record, array_get($data, 'handle.order_state_id'), array_get($data, 'handle.order_payment_status_id'));
 
         return $this->apiShow($record->id);
     }
@@ -273,8 +274,9 @@ class HCECOrdersController extends HCBaseController
         if( array_has($_data, 'id') )
             array_set($data, 'record.id', array_get($_data, 'id'));
 
-        array_set($data, 'record.order_state_id', array_get($_data, 'order_state_id'));
-        array_set($data, 'record.order_payment_status_id', array_get($_data, 'order_payment_status_id'));
+        array_set($data, 'handle.order_state_id', array_get($_data, 'order_state_id'));
+        array_set($data, 'handle.order_payment_status_id', array_get($_data, 'order_payment_status_id'));
+
         array_set($data, 'record.user_id', array_get($_data, 'user_id'));
         array_set($data, 'record.reference', array_get($_data, 'reference'));
         array_set($data, 'record.payment', array_get($_data, 'payment'));
@@ -321,7 +323,7 @@ class HCECOrdersController extends HCBaseController
     {
         $filters = [];
 
-        $orderPaymentStatus= [
+        $orderPaymentStatus = [
             'fieldID'   => 'order_payment_status_id',
             'type'      => 'dropDownList',
             'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_payment_status_id'),
@@ -329,7 +331,7 @@ class HCECOrdersController extends HCBaseController
             'showNodes' => ['title'],
         ];
 
-        $orderStates= [
+        $orderStates = [
             'fieldID'   => 'order_state_id',
             'type'      => 'dropDownList',
             'label'     => trans('HCECommerceOrders::e_commerce_orders_history.order_state_id'),
