@@ -209,7 +209,9 @@ class HCECOrderHistoryController extends HCBaseController
         return $query->where(function (Builder $query) use ($phrase) {
             $query->where('order_id', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('order_state_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('note', 'LIKE', '%' . $phrase . '%');
+                ->orWhereHas('order', function($query) use ($phrase) {
+                    $query->where('reference', 'LIKE', '%' . $phrase . '%');
+                });
         });
     }
 
