@@ -31,16 +31,16 @@ class HCECOrdersController extends HCBaseController
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_create') )
-            $config['actions'][] = 'new';
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_create') )
+//            $config['actions'][] = 'new';
 
         if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_update') ) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete') )
-            $config['actions'][] = 'delete';
+//        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_delete') )
+//            $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
         $config['filters'] = $this->getFilters();
@@ -146,6 +146,10 @@ class HCECOrdersController extends HCBaseController
         $data = $this->getInputData();
 
         $record->update(array_get($data, 'record', []));
+
+        if( in_array(request('order_state_id'), ['shipped']) ) {
+            $record->order_carriers()->update(array_get($data, 'carriers'));
+        }
 
         (new HCOrderService())->handleUpdate($record, array_get($data, 'handle.order_state_id'), array_get($data, 'handle.order_payment_status_id'));
 
@@ -291,6 +295,8 @@ class HCECOrdersController extends HCBaseController
         array_set($data, 'record.total_paid_tax_amount', array_get($_data, 'total_paid_tax_amount'));
         array_set($data, 'record.order_note', array_get($_data, 'order_note'));
 
+        array_set($data, 'carriers.tracking_number', array_get($_data, 'tracking_number'));
+
         return makeEmptyNullable($data);
     }
 
@@ -302,7 +308,7 @@ class HCECOrdersController extends HCBaseController
      */
     public function apiShow(string $id)
     {
-        $with = [];
+        $with = ['order_carriers'];
 
         $select = HCECOrders::getFillableFields();
 
@@ -310,6 +316,8 @@ class HCECOrdersController extends HCBaseController
             ->select($select)
             ->where('id', $id)
             ->firstOrFail();
+
+        $record->tracking_number = array_get($record, 'order_carriers.tracking_number');
 
         return $record;
     }

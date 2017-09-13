@@ -61,6 +61,19 @@ class HCECOrdersForm
                     ],
                 ],
                 [
+                    "type"            => "singleLine",
+                    "fieldID"         => "tracking_number",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_carriers.tracking_number"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "dependencies"    => [
+                        [
+                            'field_id'    => 'order_state_id',
+                            'field_value' => ['shipped', 'delivered'],
+                        ],
+                    ],
+                ],
+                [
                     "type"            => "dropDownList",
                     "fieldID"         => "user_id",
                     "label"           => trans("HCECommerceOrders::e_commerce_orders.user_id"),
