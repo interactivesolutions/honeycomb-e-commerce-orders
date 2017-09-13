@@ -3,6 +3,9 @@
 namespace interactivesolutions\honeycombecommerceorders\app\services;
 
 use Illuminate\Http\Request;
+use interactivesolutions\honeycombecommerceorders\app\events\{
+    HCECOrderCanceled, HCECOrderCanceledAndRestored, HCECOrderDelivered, HCECOrderPaymentAccepted, HCECOrderProcessing, HCECOrderReadyForShipment, HCECOrderShipped
+};
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
 use interactivesolutions\honeycombecommercewarehouse\app\services\HCStockService;
 
@@ -114,22 +117,23 @@ class HCOrderService
      * @param $order
      * @param $note
      */
-    protected function paymentAccepted($order, $note)
+    public function paymentAccepted($order, $note)
     {
-        // log history
-        $this->_logHistory($order->id, 'payment-status', null, 'payment-accepted', $note);
-
         // update order_state to ready for processing
         $this->readyForProcessing($order, $note);
 
-        // TODO call event payment-accepted
+        // log history
+        $this->_logHistory($order->id, 'payment-status', null, 'payment-accepted', $note);
+
+        // call event
+        event(new HCECOrderPaymentAccepted($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function readyForProcessing($order, $note)
+    public function readyForProcessing($order, $note)
     {
         $order->order_payment_status_id = 'payment-accepted';
         $order->order_state_id = 'ready-for-processing';
@@ -142,21 +146,22 @@ class HCOrderService
      * @param $order
      * @param $note
      */
-    protected function processing($order, $note)
+    public function processing($order, $note)
     {
         $order->order_state_id = 'processing-in-progress';
         $order->save();
 
-        // TODO call event order processing
-
         $this->_logHistory($order->id, 'order-state', 'processing-in-progress', null, $note);
+
+        // call event
+        event(new HCECOrderProcessing($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function readyForShipment($order, $note)
+    public function readyForShipment($order, $note)
     {
         $this->handleStock($order->details()->get(), 'moveToReadyForShipment', $note);
 
@@ -166,14 +171,15 @@ class HCOrderService
         // log history
         $this->_logHistory($order->id, 'order-state', 'ready-for-shipment', null, $note);
 
-        // TODO call event payment-accepted
+        // call event
+        event(new HCECOrderReadyForShipment($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function shipped($order, $note)
+    public function shipped($order, $note)
     {
         $this->handleStock($order->details()->get(), 'removeReadyForShipment', $note);
 
@@ -182,28 +188,30 @@ class HCOrderService
 
         $this->_logHistory($order->id, 'order-state', 'shipped', null, $note);
 
-        // TODO call event order shipped
+        // call event
+        event(new HCECOrderShipped($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function delivered($order, $note)
+    public function delivered($order, $note)
     {
         $order->order_state_id = 'delivered';
         $order->save();
 
-        // TODO call event order delivered
-
         $this->_logHistory($order->id, 'order-state', 'delivered', null, $note);
+
+        // call event
+        event(new HCECOrderDelivered($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function canceled($order, $note)
+    public function canceled($order, $note)
     {
         if( in_array($order->order_state_id, ['canceled', 'canceled-and-restored']) ) {
             return;
@@ -214,14 +222,15 @@ class HCOrderService
 
         $this->_logHistory($order->id, 'order-state', 'canceled', null, $note);
 
-        // TODO call event order canceled
+        // call event
+        event(new HCECOrderCanceled($order));
     }
 
     /**
      * @param $order
      * @param $note
      */
-    protected function canceledAndRestored($order, $note)
+    public function canceledAndRestored($order, $note)
     {
         $orderDetails = $order->details()->get();
 
@@ -248,7 +257,8 @@ class HCOrderService
 
         $this->_logHistory($order->id, 'order-state', 'canceled-and-restored', null, $note);
 
-        // TODO call event order canceled and restored
+        // call event
+        event(new HCECOrderCanceledAndRestored($order));
     }
 
     /**
