@@ -71,6 +71,10 @@ class HCECOrdersForm
                             'field_id'    => 'order_state_id',
                             'field_value' => ['shipped', 'delivered'],
                         ],
+                        [
+                            'field_id'    => 'order_payment_status_id',
+                            'field_value' => 'payment-accepted',
+                        ],
                     ],
                 ],
                 [
