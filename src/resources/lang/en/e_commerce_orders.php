@@ -16,4 +16,10 @@ return [
     'total_paid_before_tax'      => 'Total paid before tax',
     'total_paid_tax_amount'      => 'Total paid tax amount',
     'order_note'                 => 'Order note',
+    'order_history_note'         => 'Order history note',
+
+    'tabs' => [
+        'status' => 'Status',
+        'info'   => 'Info',
+    ],
 ];

@@ -151,7 +151,12 @@ class HCECOrdersController extends HCBaseController
             $record->order_carriers()->update(array_get($data, 'carriers'));
         }
 
-        (new HCOrderService())->handleUpdate($record, array_get($data, 'handle.order_state_id'), array_get($data, 'handle.order_payment_status_id'));
+        (new HCOrderService())->handleUpdate(
+            $record,
+            array_get($data, 'handle.order_state_id'),
+            array_get($data, 'handle.order_payment_status_id'),
+            array_get($data, 'order_history.note')
+        );
 
         return $this->apiShow($record->id);
     }
@@ -290,10 +295,14 @@ class HCECOrdersController extends HCBaseController
         array_set($data, 'record.total_discounts', array_get($_data, 'total_discounts'));
         array_set($data, 'record.total_discounts_before_tax', array_get($_data, 'total_discounts_before_tax'));
         array_set($data, 'record.total_discounts_tax_amount', array_get($_data, 'total_discounts_tax_amount'));
+
         array_set($data, 'record.total_paid', array_get($_data, 'total_paid'));
         array_set($data, 'record.total_paid_before_tax', array_get($_data, 'total_paid_before_tax'));
         array_set($data, 'record.total_paid_tax_amount', array_get($_data, 'total_paid_tax_amount'));
+
         array_set($data, 'record.order_note', array_get($_data, 'order_note'));
+
+        array_set($data, 'order_history.note', array_get($_data, 'order_history_note'));
 
         array_set($data, 'carriers.tracking_number', array_get($_data, 'tracking_number'));
 

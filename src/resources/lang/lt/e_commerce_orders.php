@@ -16,4 +16,10 @@ return [
     'total_paid_before_tax'      => 'Viso sumokėta be mokesčių',
     'total_paid_tax_amount'      => 'Viso sumokėta mokesčių kiekis',
     'order_note'                 => 'Papildoma užsakymo informacija',
+    'order_history_note'         => 'Užsakymo pastabos / komentaras',
+
+    'tabs' => [
+        'status' => 'Statusas',
+        'info'   => 'Informacija',
+    ],
 ];
