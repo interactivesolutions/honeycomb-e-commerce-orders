@@ -21,7 +21,7 @@ class HCOrderService
     public function handleUpdate($order, $orderStateId, $orderPaymentStatusId, $note = null)
     {
         if( $order->order_state_id == 'canceled' || $order->order_state_id == 'canceled-and-restored' ) {
-            throw new \Exception('Atsakymas atšauktas. Daugiau nieko negalite padaryti.');
+            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.order_canceled'));
         }
 
         if( $orderStateId == 'canceled' ) {
@@ -40,7 +40,7 @@ class HCOrderService
         if( $order->order_payment_status_id != $orderPaymentStatusId ) {
             if( $orderPaymentStatusId == 'payment-accepted' ) {
                 if( $orderStateId != 'ready-for-processing' && ! is_null($orderStateId) ) {
-                    throw new \Exception('Po sėkmingo apmokėjimo užsakymo būsena turi būti nustatyta į paruošta vykdymui');
+                    throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.payment_accepted_but_not_ready'));
                 }
 
                 $this->paymentAccepted($order, $note);
@@ -56,7 +56,7 @@ class HCOrderService
 
                     if( $orderStateId == 'processing-in-progress' ) {
                         if( $order->order_state_id != 'ready-for-processing' ) {
-                            throw new \Exception('Tik kai užsakymo būsena buvo ready-for-processing galima pasirinkti processing');
+                            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_processing'));
                         }
 
                         // update order_state to ready for processing
@@ -65,7 +65,7 @@ class HCOrderService
                     } else if( $orderStateId == 'ready-for-shipment' ) {
 
                         if( $order->order_state_id != 'processing-in-progress' ) {
-                            throw new \Exception('Tik kai užsakymo būsena buvo processing-in-progress galima pasirinkti ready-for-shipment');
+                            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_shipment_after_processing'));
                         }
 
                         // update order_state to shipped
@@ -74,7 +74,7 @@ class HCOrderService
                     } else if( $orderStateId == 'shipped' ) {
 
                         if( $order->order_state_id != 'ready-for-shipment' ) {
-                            throw new \Exception('Tik kai užsakymo būsena buvo ready-for-shipment galima pasirinkti shipping');
+                            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_shipment'));
                         }
 
                         // update order_state to shipped
@@ -83,33 +83,16 @@ class HCOrderService
                     } else if( $orderStateId == 'delivered' ) {
 
                         if( $order->order_state_id != 'shipped' ) {
-                            throw new \Exception('Tik kai užsakymo būsena buvo shipped galima pasirinkti delivered');
+                            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_delivered'));
+
                         }
 
                         // update order_state to delivered
                         $this->delivered($order, $note);
 
                     }
-//                    else if( $orderStateId == 'canceled' ) {
-//                        // update order_state to canceled
-//                        $this->canceled($order, $note);
-//                    } else if( $orderStateId == 'canceled-and-restored' ) {
-//
-//                        // update order_state to canceled-and-restored
-//                        $this->canceledAndRestored($order, $note);
-//                    }
                 }
             }
-//            else {
-//                if( $orderStateId == 'canceled' ) {
-//                    // update order_state to canceled
-//                    $this->canceled($order, $note);
-//                } else if( $orderStateId == 'canceled-and-restored' ) {
-//
-//                    // update order_state to canceled-and-restored
-//                    $this->canceledAndRestored($order, $note);
-//                }
-//            }
         }
     }
 
@@ -238,19 +221,10 @@ class HCOrderService
             return;
         }
 
-        if( $order->order_payment_status_id == 'payment-accepted' ) {
-            if( in_array($order->order_state_id, ['shipped', 'delivered']) ) {
-                // increase stock when items are shipped or delivered
-                $this->handleStock($orderDetails, 'replenishmentForSale', $note);
+        $method = $this->getStockMethod($order);
 
-            } else if( $order->order_state_id == 'ready-for-shipment' ) {
-                $this->handleStock($orderDetails, 'cancelReadyForShipment', $note);
-            } else {
-                $this->handleStock($orderDetails, 'removeReserved', $note);
-            }
-        } else {
-            $this->handleStock($orderDetails, 'removeReserved', $note);
-        }
+        // restore stock by order status
+        $this->handleStock($orderDetails, $method, $note);
 
         $order->order_state_id = 'canceled-and-restored';
         $order->save();
@@ -295,5 +269,24 @@ class HCOrderService
         foreach ( $details as $detail ) {
             $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
         }
+    }
+
+    /**
+     * @param $order
+     * @return string
+     */
+    protected function getStockMethod($order): string
+    {
+        $method = 'removeReserved';
+
+        if( $order->order_payment_status_id == 'payment-accepted' ) {
+            if( in_array($order->order_state_id, ['shipped', 'delivered']) ) {
+                $method = 'replenishmentForSale';
+            } else if( $order->order_state_id == 'ready-for-shipment' ) {
+                $method = 'cancelReadyForShipment';
+            }
+        }
+
+        return $method;
     }
 }

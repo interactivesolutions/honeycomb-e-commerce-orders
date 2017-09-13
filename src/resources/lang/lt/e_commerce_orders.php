@@ -22,4 +22,14 @@ return [
         'status' => 'Statusas',
         'info'   => 'Informacija',
     ],
+
+    'errors' => [
+        'order_canceled'                 => 'Užsakymas jau atšauktas. Daugiau nieko negalite padaryti.',
+        'payment_accepted_but_not_ready' => 'Po sėkmingo apmokėjimo užsakymo būsena turi būti nustatyta į "paruošta vykdymui"',
+
+        'not_ready_for_processing'                => '"Užsakymą vykdymui" galima pasirinkti tik tada, kai užsakymo statusas yra  "paruoštas vykdymui"',
+        'not_ready_for_shipment_after_processing' => '"Paruošta siuntimui" galima pasirinkti tik tada, kai užsakymo statusas yra "vykdomas"',
+        'not_ready_for_shipment'                  => '"Užsakymas išsiųtas" galima pasirinkti tik tada, kai užsakymo statusas yra "Paruošta išsiųsti"',
+        'not_ready_for_delivered'                 => '"Užsakymas pristatytas" galima pasirinkti tik tada, kai užsakymo statusas yra "išsiųstas"',
+    ],
 ];
