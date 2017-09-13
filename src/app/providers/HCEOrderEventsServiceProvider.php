@@ -4,7 +4,10 @@ namespace interactivesolutions\honeycombecommerceorders\app\providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use interactivesolutions\honeycombecommerceorders\app\events\HCECOrderPaymentAccepted;
+use interactivesolutions\honeycombecommerceorders\app\events\{
+    HCECOrderCanceled, HCECOrderCanceledAndRestored, HCECOrderPaymentAccepted
+};
+use interactivesolutions\honeycombecommerceorders\app\listeners\HCECDeleteGeneratedInvoiceNumber;
 use interactivesolutions\honeycombecommerceorders\app\listeners\HCECGenerateInvoiceNumber;
 
 class HCEOrderEventsServiceProvider extends ServiceProvider
@@ -15,8 +18,14 @@ class HCEOrderEventsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        HCECOrderPaymentAccepted::class => [
+        HCECOrderPaymentAccepted::class     => [
             HCECGenerateInvoiceNumber::class,
+        ],
+        HCECOrderCanceledAndRestored::class => [
+            HCECDeleteGeneratedInvoiceNumber::class,
+        ],
+        HCECOrderCanceled::class            => [
+            HCECDeleteGeneratedInvoiceNumber::class,
         ],
     ];
 
