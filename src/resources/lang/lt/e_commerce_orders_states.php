@@ -9,4 +9,6 @@ return [
     'shipped'                => 'Užsakymas išsiųstas',
     'delivered'              => 'Pristatytas',
     'canceled'               => 'Atšauktas',
+    'canceled-and-restored'  => 'Atšauktas ir prekės sugrąžintos',
+    'ready-for-shipment'     => 'Paruošta siuntimui',
 ];

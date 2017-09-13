@@ -22,6 +22,9 @@ class HCECOrderStatesSeed extends Seeder
                 'id' => 'processing-in-progress',
             ],
             [
+                'id' => 'ready-for-shipment',
+            ],
+            [
                 'id' => 'shipped',
             ],
             [
@@ -29,6 +32,9 @@ class HCECOrderStatesSeed extends Seeder
             ],
             [
                 'id' => 'canceled',
+            ],
+            [
+                'id' => 'canceled-and-restored',
             ],
         ];
 

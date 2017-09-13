@@ -17,6 +17,23 @@ class HCOrderService
      */
     public function handleUpdate($order, $orderStateId, $orderPaymentStatusId, $note = null)
     {
+        if( $order->order_state_id == 'canceled' || $order->order_state_id == 'canceled-and-restored' ) {
+            throw new \Exception('Atsakymas atšauktas. Daugiau nieko negalite padaryti.');
+        }
+
+        if( $orderStateId == 'canceled' ) {
+            // update order_state to canceled
+            $this->canceled($order, $note);
+
+            return;
+        } else if( $orderStateId == 'canceled-and-restored' ) {
+            // update order_state to canceled-and-restored
+            $this->canceledAndRestored($order, $note);
+
+            return;
+        }
+
+        // when order payment status is changing
         if( $order->order_payment_status_id != $orderPaymentStatusId ) {
             if( $orderPaymentStatusId == 'payment-accepted' ) {
                 if( $orderStateId != 'ready-for-processing' && ! is_null($orderStateId) ) {
@@ -25,8 +42,11 @@ class HCOrderService
 
                 $this->paymentAccepted($order, $note);
             }
+
+            // when order payment status not changing but changing order state
         } else if( $order->order_payment_status_id == $orderPaymentStatusId ) {
 
+            // if order is already paid
             if( $orderPaymentStatusId == 'payment-accepted' ) {
 
                 if( $order->order_state_id != $orderStateId ) {
@@ -39,16 +59,23 @@ class HCOrderService
                         // update order_state to ready for processing
                         $this->processing($order, $note);
 
+                    } else if( $orderStateId == 'ready-for-shipment' ) {
+
+                        if( $order->order_state_id != 'processing-in-progress' ) {
+                            throw new \Exception('Tik kai užsakymo būsena buvo processing-in-progress galima pasirinkti ready-for-shipment');
+                        }
+
+                        // update order_state to shipped
+                        $this->readyForShipment($order, $note);
 
                     } else if( $orderStateId == 'shipped' ) {
 
-                        if( $order->order_state_id != 'processing-in-progress' ) {
-                            throw new \Exception('Tik kai užsakymo būsena buvo processing-in-progress galima pasirinkti shipping');
+                        if( $order->order_state_id != 'ready-for-shipment' ) {
+                            throw new \Exception('Tik kai užsakymo būsena buvo ready-for-shipment galima pasirinkti shipping');
                         }
 
                         // update order_state to shipped
                         $this->shipped($order, $note);
-
 
                     } else if( $orderStateId == 'delivered' ) {
 
@@ -59,22 +86,27 @@ class HCOrderService
                         // update order_state to delivered
                         $this->delivered($order, $note);
 
-
-                    } else if( $orderStateId == 'canceled' ) {
-                        if( $order->order_state_id == 'delivered' ) {
-                            throw new \Exception('Pristatytų prekių atšaukti nebegalima');
-                        }
-
-                        if( $order->order_state_id == 'shipped' ) {
-                            throw new \Exception('Išsiųstų prekių atšaukti nebegalima');
-                        }
-
-                        // update order_state to ready for processing
-                        $this->canceled($order, $note);
                     }
-
+//                    else if( $orderStateId == 'canceled' ) {
+//                        // update order_state to canceled
+//                        $this->canceled($order, $note);
+//                    } else if( $orderStateId == 'canceled-and-restored' ) {
+//
+//                        // update order_state to canceled-and-restored
+//                        $this->canceledAndRestored($order, $note);
+//                    }
                 }
             }
+//            else {
+//                if( $orderStateId == 'canceled' ) {
+//                    // update order_state to canceled
+//                    $this->canceled($order, $note);
+//                } else if( $orderStateId == 'canceled-and-restored' ) {
+//
+//                    // update order_state to canceled-and-restored
+//                    $this->canceledAndRestored($order, $note);
+//                }
+//            }
         }
     }
 
@@ -89,15 +121,6 @@ class HCOrderService
 
         // update order_state to ready for processing
         $this->readyForProcessing($order, $note);
-
-        $orderDetails = $order->details()->get();
-
-        $stockService = new HCStockService();
-
-        // reduce reserved stock items
-        foreach ( $orderDetails as $detail ) {
-            $stockService->removeReserved($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
-        }
 
         // TODO call event payment-accepted
     }
@@ -124,7 +147,6 @@ class HCOrderService
         $order->order_state_id = 'processing-in-progress';
         $order->save();
 
-
         // TODO call event order processing
 
         $this->_logHistory($order->id, 'order-state', 'processing-in-progress', null, $note);
@@ -134,14 +156,33 @@ class HCOrderService
      * @param $order
      * @param $note
      */
+    protected function readyForShipment($order, $note)
+    {
+        $this->handleStock($order->details()->get(), 'moveToReadyForShipment', $note);
+
+        $order->order_state_id = 'ready-for-shipment';
+        $order->save();
+
+        // log history
+        $this->_logHistory($order->id, 'order-state', 'ready-for-shipment', null, $note);
+
+        // TODO call event payment-accepted
+    }
+
+    /**
+     * @param $order
+     * @param $note
+     */
     protected function shipped($order, $note)
     {
+        $this->handleStock($order->details()->get(), 'removeReadyForShipment', $note);
+
         $order->order_state_id = 'shipped';
         $order->save();
 
-        // TODO call event order shipped
-
         $this->_logHistory($order->id, 'order-state', 'shipped', null, $note);
+
+        // TODO call event order shipped
     }
 
     /**
@@ -164,13 +205,50 @@ class HCOrderService
      */
     protected function canceled($order, $note)
     {
+        if( in_array($order->order_state_id, ['canceled', 'canceled-and-restored']) ) {
+            return;
+        }
+
         $order->order_state_id = 'canceled';
         $order->save();
 
-        // TODO return stock information from reserved to on_sale
-        // TODO call event order canceled
-
         $this->_logHistory($order->id, 'order-state', 'canceled', null, $note);
+
+        // TODO call event order canceled
+    }
+
+    /**
+     * @param $order
+     * @param $note
+     */
+    protected function canceledAndRestored($order, $note)
+    {
+        $orderDetails = $order->details()->get();
+
+        if( in_array($order->order_state_id, ['canceled', 'canceled-and-restored']) ) {
+            return;
+        }
+
+        if( $order->order_payment_status_id == 'payment-accepted' ) {
+            if( in_array($order->order_state_id, ['shipped', 'delivered']) ) {
+                // increase stock when items are shipped or delivered
+                $this->handleStock($orderDetails, 'replenishmentForSale', $note);
+
+            } else if( $order->order_state_id == 'ready-for-shipment' ) {
+                $this->handleStock($orderDetails, 'cancelReadyForShipment', $note);
+            } else {
+                $this->handleStock($orderDetails, 'removeReserved', $note);
+            }
+        } else {
+            $this->handleStock($orderDetails, 'removeReserved', $note);
+        }
+
+        $order->order_state_id = 'canceled-and-restored';
+        $order->save();
+
+        $this->_logHistory($order->id, 'order-state', 'canceled-and-restored', null, $note);
+
+        // TODO call event order canceled and restored
     }
 
     /**
@@ -191,5 +269,21 @@ class HCOrderService
             'order_payment_status_id' => $orderPaymentStatusId,
             'note'                    => $note,
         ]);
+    }
+
+    /**
+     * Handle stock
+     *
+     * @param $details
+     * @param $method
+     * @param $note
+     */
+    protected function handleStock($details, $method, $note)
+    {
+        $stockService = new HCStockService();
+
+        foreach ( $details as $detail ) {
+            $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+        }
     }
 }

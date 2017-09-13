@@ -9,4 +9,6 @@ return [
     'shipped'                => 'Shipped',
     'delivered'              => 'Delivered',
     'canceled'               => 'Canceled',
+    'canceled-and-restored'  => 'Canceled and restored',
+    'ready-for-shipment'     => 'Ready for shipment',
 ];
