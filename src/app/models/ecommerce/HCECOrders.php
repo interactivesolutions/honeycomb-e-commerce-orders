@@ -8,6 +8,7 @@ use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HC
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderInvoices;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\payment\HCECOrderPaymentStatus;
 
@@ -96,5 +97,16 @@ class HCECOrders extends HCUuidModel
     {
         return $this->hasOne(HCECOrderCarriers::class, 'order_id', 'id');
     }
+
+    /**
+     * Relation to table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_invoice()
+    {
+        return $this->hasOne(HCECOrderInvoices::class, 'order_id', 'id');
+    }
+
 
 }
