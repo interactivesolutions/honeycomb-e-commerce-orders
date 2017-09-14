@@ -277,7 +277,7 @@ class HCOrderService
      */
     protected function getStockMethod($order): string
     {
-        $method = 'removeReserved';
+        $method = 'cancelReserved';
 
         if( $order->order_payment_status_id == 'payment-accepted' ) {
             if( in_array($order->order_state_id, ['shipped', 'delivered']) ) {
