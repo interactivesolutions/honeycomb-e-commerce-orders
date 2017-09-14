@@ -1,7 +1,8 @@
 <?php
 return [
-    'page_title' => 'Krepšeliai',
-    'user_id'    => 'Vartotojas',
+    'page_title'    => 'Krepšeliai',
+    'user_id'       => 'Vartotojas',
+    'user_notified' => 'Vartotojas informuotas',
 
     'errors' => [
         'not_found'      => 'Kažkas negerai su krepšeliu!',

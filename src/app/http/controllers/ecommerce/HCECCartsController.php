@@ -62,7 +62,10 @@ class HCECCartsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCTranslations::core.created'),
             ],
-
+            'user_notified' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_carts.user_notified'),
+            ],
         ];
     }
 
@@ -191,7 +194,11 @@ class HCECCartsController extends HCBaseController
     protected function searchQuery(Builder $query, string $phrase)
     {
         return $query->where(function (Builder $query) use ($phrase) {
-            $query->where('user_id', 'LIKE', '%' . $phrase . '%');
+            $query->where('user_id', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('user_notified', 'LIKE', '%' . $phrase . '%')
+                ->orWhereHas('user', function ($query) use ($phrase) {
+                    $query->where('email', 'LIKE', '%' . $phrase . '%');
+                });
         });
     }
 
@@ -210,6 +217,7 @@ class HCECCartsController extends HCBaseController
             array_set($data, 'record.id', array_get($_data, 'id'));
 
         array_set($data, 'record.user_id', array_get($_data, 'user_id'));
+        array_set($data, 'record.user_notified', array_get($_data, 'user_notified'));
 
         return $data;
     }

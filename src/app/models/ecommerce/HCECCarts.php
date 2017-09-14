@@ -21,7 +21,7 @@ class HCECCarts extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'user_id'];
+    protected $fillable = ['id', 'user_id', 'user_notified'];
 
     /**
      * Relation to user
