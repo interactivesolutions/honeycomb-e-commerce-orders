@@ -83,10 +83,13 @@ class HCUserCartService
      */
     public function remove($cartId, $cartItemId)
     {
-        HCECCartItems::where('id', $cartItemId)
+        $cartItem = HCECCartItems::where('id', $cartItemId)
             ->where('cart_id', $cartId)
-            ->has('cart')
-            ->forceDelete();
+            ->has('cart')->first();
+
+        if( $cartItem ) {
+            $cartItem->forceDelete();
+        }
     }
 
     /**
