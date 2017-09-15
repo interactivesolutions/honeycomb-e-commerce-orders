@@ -23,22 +23,17 @@ class HCCart
     public $cartId;
 
     /**
-     * HCCart constructor.
-     *
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->items = $this->getItemsContent($request);
-    }
-
-    /**
      * Get cart content
      *
+     * @param Request $request
+     * @param null $userId - cart content by user id
+     * @param null $cartId - cart content by given cart id
      * @return array|bool|false|int|string
      */
-    public function getContent()
+    public function getContent(Request $request, $userId = null, $cartId = null)
     {
+        $this->items = $this->getItemsContent($request, $userId, $cartId);
+
         return $this->getCartContent();
     }
 
@@ -63,11 +58,17 @@ class HCCart
      * Get cart items content
      *
      * @param Request $request
+     * @param $userId
+     * @param $cartId
      * @return \Illuminate\Support\Collection
      */
-    protected function getItemsContent(Request $request)
+    protected function getItemsContent(Request $request, $userId, $cartId)
     {
-        $cartId = app(HCCartService::class)->getCartId($request, true);
+        if( $userId && is_null($cartId) ) {
+            $cartId = app(HCCartService::class)->getUserCartId($userId);
+        } else if( is_null($cartId) ) {
+            $cartId = app(HCCartService::class)->getCartId($request, false);
+        }
 
         $this->cartId = $cartId;
 

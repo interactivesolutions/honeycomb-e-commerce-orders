@@ -65,7 +65,7 @@ class HCCartService
             cookie()->forget(self::CART_NAME);
         }
 
-        return false;
+        return null;
     }
 
     /**
