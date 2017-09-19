@@ -45,12 +45,15 @@ class HCCart
     protected function getCartContent()
     {
         return [
-            'cart_id'          => $this->cartId,
-            'count'            => $this->count(),
-            'price'            => $this->price(),
-            'price_before_tax' => $this->priceBeforeTax(),
-            'price_tax_amount' => $this->priceTaxAmount(),
-            'items'            => $this->getItems(),
+            'cart_id'                   => $this->cartId,
+            'count'                     => $this->count(),
+            'price'                     => $this->price(),
+            'price_before_tax'          => $this->priceBeforeTax(),
+            'price_tax_amount'          => $this->priceTaxAmount(),
+            'unit_price'                => $this->unitPrice(),
+            'unit_price_before_tax'     => $this->unitPriceBeforeTax(),
+            'unit_price_tax_amount'     => $this->unitPriceTaxAmount(),
+            'items'                     => $this->getItems(),
         ];
     }
 
@@ -142,6 +145,48 @@ class HCCart
     }
 
     /**
+     * Get the total price of the items in the cart.
+     */
+    public function unitPrice()
+    {
+        $items = $this->getItems();
+
+        $total = $items->reduce(function ($total, $cartItem) {
+            return $total + (array_get($cartItem, 'prices.total_unit_price'));
+        }, 0);
+
+        return PriceHelper::round($total);
+    }
+
+    /**
+     * Get the total price of the items in the cart.
+     */
+    public function unitPriceBeforeTax()
+    {
+        $items = $this->getItems();
+
+        $total = $items->reduce(function ($total, $cartItem) {
+            return $total + (array_get($cartItem, 'prices.total_unit_price_before_tax'));
+        }, 0);
+
+        return PriceHelper::round($total);
+    }
+
+    /**
+     * Get the total price of the items in the cart.
+     */
+    public function unitPriceTaxAmount()
+    {
+        $items = $this->getItems();
+
+        $total = $items->reduce(function ($total, $cartItem) {
+            return $total + (array_get($cartItem, 'prices.total_unit_price_tax_amount'));
+        }, 0);
+
+        return PriceHelper::round($total);
+    }
+
+    /**
      * Get goods by cart item
      *
      * @param $cartItems
@@ -159,6 +204,7 @@ class HCCart
                     },
                     'translations',
                     'stock_summary',
+                    'tax.translations',
                 ]);
             }]);
 
@@ -169,12 +215,21 @@ class HCCart
             $item['cart_item_id'] = $cartItem->id;
             $item['goods_id'] = $cartItem->goods_id;
             $item['prices'] = [
-                'price'                  => PriceHelper::round($cartItem->goods->price),
-                'total_price'            => PriceHelper::round($cartItem->amount * $cartItem->goods->price),
-                'price_before_tax'       => PriceHelper::round($cartItem->goods->price_before_tax),
-                'total_price_before_tax' => PriceHelper::round($cartItem->amount * $cartItem->goods->price_before_tax),
-                'price_tax_amount'       => PriceHelper::round($cartItem->goods->price_tax_amount),
-                'total_price_tax_amount' => PriceHelper::round($cartItem->amount * $cartItem->goods->price_tax_amount),
+                'price'                           => PriceHelper::round($cartItem->goods->price),
+                'price_before_tax'                => PriceHelper::round($cartItem->goods->price_before_tax),
+                'price_tax_amount'                => PriceHelper::round($cartItem->goods->price_tax_amount),
+
+                'unit_price'                      => PriceHelper::round($cartItem->goods->price),
+                'unit_price_before_tax'           => PriceHelper::round($cartItem->goods->price_before_tax),
+                'unit_price_tax_amount'           => PriceHelper::round($cartItem->goods->price_tax_amount),
+
+                'total_unit_price'                => PriceHelper::round($cartItem->amount * $cartItem->goods->price),
+                'total_unit_price_before_tax'     => PriceHelper::round($cartItem->amount * $cartItem->goods->price_before_tax),
+                'total_unit_price_tax_amount'     => PriceHelper::round($cartItem->amount * $cartItem->goods->price_tax_amount),
+
+                'total_price'                     => PriceHelper::round($cartItem->amount * $cartItem->goods->price),
+                'total_price_before_tax'          => PriceHelper::round($cartItem->amount * $cartItem->goods->price_before_tax),
+                'total_price_tax_amount'          => PriceHelper::round($cartItem->amount * $cartItem->goods->price_tax_amount),
             ];
 
             $goods[] = $item;
