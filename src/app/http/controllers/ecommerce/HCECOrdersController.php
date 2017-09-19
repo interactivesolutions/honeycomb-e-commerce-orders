@@ -80,37 +80,41 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_price'),
             ],
-            'total_price_before_tax'     => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
-            ],
-            'total_price_tax_amount'     => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_tax_amount'),
-            ],
+//            'total_price_before_tax'     => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_before_tax'),
+//            ],
+//            'total_price_tax_amount'     => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_price_tax_amount'),
+//            ],
             'total_discounts'            => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts'),
             ],
-            'total_discounts_before_tax' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
-            ],
-            'total_discounts_tax_amount' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_tax_amount'),
-            ],
+//            'total_discounts_before_tax' => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_before_tax'),
+//            ],
+//            'total_discounts_tax_amount' => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_discounts_tax_amount'),
+//            ],
             'total_paid'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid'),
             ],
-            'total_paid_before_tax'      => [
+//            'total_paid_before_tax'      => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
+//            ],
+//            'total_paid_tax_amount'      => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_tax_amount'),
+//            ],
+            'total_unit_price'                 => [
                 "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_before_tax'),
-            ],
-            'total_paid_tax_amount'      => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_tax_amount'),
+                "label" => trans('HCECommerceOrders::e_commerce_orders.total_unit_price'),
             ],
             'order_note'                 => [
                 "type"  => "text",

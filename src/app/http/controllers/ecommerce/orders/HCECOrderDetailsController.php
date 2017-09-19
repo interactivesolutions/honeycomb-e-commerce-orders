@@ -65,9 +65,17 @@ class HCECOrderDetailsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.combination_id'),
             ],
+            'reference'                      => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.reference'),
+            ],
             'warehouse.name'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.warehouse_id'),
+            ],
+            'name'                           => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.name'),
             ],
             'tax_name'                       => [
                 "type"  => "text",
@@ -81,38 +89,46 @@ class HCECOrderDetailsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.amount'),
             ],
-            'reference'                      => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.reference'),
-            ],
-            'name'                           => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.name'),
-            ],
             'price'                          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.price'),
             ],
-            'price_before_tax'               => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_before_tax'),
-            ],
-            'price_tax_amount'               => [
-                "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_tax_amount'),
-            ],
+//            'price_before_tax'               => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_before_tax'),
+//            ],
+//            'price_tax_amount'               => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders_details.price_tax_amount'),
+//            ],
             'total_price'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price'),
             ],
-            'total_price_before_tax'         => [
+            'discount_type'                  => [
                 "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_before_tax'),
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.discount_type'),
             ],
-            'total_price_tax_amount'         => [
+            'discount_amount'                => [
                 "type"  => "text",
-                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_tax_amount'),
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.discount_amount'),
             ],
+            'discounts'                      => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.discounts'),
+            ],
+            'unit_price'                     => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.unit_price'),
+            ],
+//            'total_price_before_tax'         => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_before_tax'),
+//            ],
+//            'total_price_tax_amount'         => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_tax_amount'),
+//            ],
 
         ];
     }

@@ -17,4 +17,12 @@ return [
     'total_price'            => 'Total price',
     'total_price_before_tax' => 'Total price before tax',
     'total_price_tax_amount' => 'Total price tax amount',
+    'unit_price'             => 'Unit price',
+    'unit_price_before_tax'  => 'Unit price before tax',
+    'unit_price_tax_amount'  => 'Unit price tax amount',
+    'discount_type'          => 'Discount type',
+    'discount_amount'        => 'Discount amount',
+    'discounts'              => 'Discounts',
+    'discounts_before_tax'   => 'Discounts before tax',
+    'discounts_tax_amount'   => 'Discounts tax amount',
 ];

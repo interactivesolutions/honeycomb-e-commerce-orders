@@ -17,4 +17,12 @@ return [
     'total_price'            => 'Viso kaina',
     'total_price_before_tax' => 'Viso kaina be mokesčių',
     'total_price_tax_amount' => 'Visos kainos mokesčių kiekis',
+    'unit_price'             => 'Vieneto kaina',
+    'unit_price_before_tax'  => 'Vieneto kaina be mokesčių',
+    'unit_price_tax_amount'  => 'Vieneto kaina mokesčių kiekis',
+    'discount_type'          => 'Nuolaidos tipas',
+    'discount_amount'        => 'Nuolaidos tipo kiekis',
+    'discounts'              => 'Nuolaida',
+    'discounts_before_tax'   => 'Nuolaida be mokesčių',
+    'discounts_tax_amount'   => 'Nuolaidos mokesčių kiekis',
 ];

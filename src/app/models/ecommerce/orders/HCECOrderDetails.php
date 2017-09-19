@@ -22,7 +22,14 @@ class HCECOrderDetails extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'order_id', 'good_id', 'combination_id', 'warehouse_id', 'tax_name', 'tax_value', 'amount', 'reference', 'name', 'price', 'price_before_tax', 'price_tax_amount', 'total_price', 'total_price_before_tax', 'total_price_tax_amount'];
+    protected $fillable = [
+        'id', 'order_id', 'good_id', 'combination_id', 'warehouse_id', 'tax_name', 'tax_value', 'amount', 'reference', 'name',
+        'price', 'price_before_tax', 'price_tax_amount',
+        'total_price', 'total_price_before_tax', 'total_price_tax_amount',
+        'unit_price', 'unit_price_before_tax', 'unit_price_tax_amount',
+        'discount_type', 'discount_amount',
+        'discounts', 'discounts_before_tax', 'discounts_tax_amount',
+    ];
 
     /**
      * Relation to table
