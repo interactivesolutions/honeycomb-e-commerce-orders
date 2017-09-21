@@ -13,7 +13,8 @@
         "e-commerce-orders-address": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderAddressForm",
         "e-commerce-orders-carriers": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderCarriersForm",
         "e-commerce-orders-payment-status": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\payment\\HCECOrderPaymentStatusForm",
-        "e-commerce-orders-invoices": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderInvoicesForm"
+        "e-commerce-orders-invoices": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECOrderInvoicesForm",
+        "e-commerce-orders-discount-codes": "interactivesolutions\\honeycombecommerceorders\\app\\forms\\ecommerce\\orders\\HCECDiscountCodesForm"
     },
     "adminMenu": [
         {
@@ -100,6 +101,14 @@
             "translation": "HCECommerceOrders::e_commerce_orders_invoices.page_title",
             "icon": "fa-truck",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_list",
+            "priority": 10,
+            "parent": "admin.routes.e.commerce.orders.index"
+        },
+        {
+            "route": "admin.routes.e.commerce.orders.discount.codes.index",
+            "translation": "HCECommerceOrders::e_commerce_orders_discount_codes.page_title",
+            "icon": "fa-truck",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_list",
             "priority": 10,
             "parent": "admin.routes.e.commerce.orders.index"
         }
@@ -226,6 +235,17 @@
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_delete",
                     "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_force_delete"
                 ]
+            },
+            {
+                "name": "admin.routes.e.commerce.orders.discount.codes",
+                "controller": "interactivesolutions\\honeycombecommerceorders\\app\\http\\controllers\\ecommerce\\orders\\HCECDiscountCodesController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_list",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_create",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_update",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_delete",
+                    "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -273,7 +293,11 @@
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_list",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_create",
                 "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_update",
-                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_delete"
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_invoices_delete",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_list",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_create",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_update",
+                "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_delete"
             ]
         }
     }
