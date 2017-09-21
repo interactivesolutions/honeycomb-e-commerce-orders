@@ -107,7 +107,7 @@
         {
             "route": "admin.routes.e.commerce.orders.discount.codes.index",
             "translation": "HCECommerceOrders::e_commerce_orders_discount_codes.page_title",
-            "icon": "fa-truck",
+            "icon": "fa-circle-o",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_orders_discount_codes_list",
             "priority": 10,
             "parent": "admin.routes.e.commerce.orders.index"
