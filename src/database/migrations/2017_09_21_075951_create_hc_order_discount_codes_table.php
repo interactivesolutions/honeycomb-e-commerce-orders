@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHcDiscountCodeUsagesTable extends Migration
+class CreateHcOrderDiscountCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateHcDiscountCodeUsagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hc_discount_code_usages', function (Blueprint $table) {
+        Schema::create('hc_order_discount_codes', function (Blueprint $table) {
             $table->integer('count', true);
             $table->string('id', 36)->unique('id_UNIQUE');
             $table->timestamps();
             $table->softDeletes();
 
             $table->string('order_id', 36);
-            $table->string('discount_code_id', 36);
-
-            $table->unique(['order_id', 'discount_code_id'], 'unique_discount_code_and_order_id');
+            $table->string('title')->nullable();
+            $table->string('code', 45)->unique('unique_code');
+            $table->enum('type', ['percentage', 'fixed', 'none'])->default('none');
+            $table->float('amount', 20, 8)->default('0.000000')->nullable();
+            $table->enum('shipping_included', ['1', '0'])->default('0');
+            $table->enum('free_shipping', ['1', '0'])->default('0');
 
             $table->foreign('order_id')->references('id')->on('hc_orders')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('discount_code_id')->references('id')->on('hc_discount_codes')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -36,6 +38,6 @@ class CreateHcDiscountCodeUsagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hc_discount_code_usages');
+        Schema::dropIfExists('hc_order_discount_codes');
     }
 }

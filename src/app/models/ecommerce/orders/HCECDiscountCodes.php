@@ -4,7 +4,6 @@ namespace interactivesolutions\honeycombecommerceorders\app\models\ecommerce\ord
 
 use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\models\HCUuidModel;
-use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECOrders;
 
 class HCECDiscountCodes extends HCUuidModel
 {
@@ -30,25 +29,5 @@ class HCECDiscountCodes extends HCUuidModel
     public function user()
     {
         return $this->belongsTo(HCUsers::class, 'user_id', 'id');
-    }
-
-    /**
-     * Has many usages
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function usages()
-    {
-        return $this->hasMany(HCECDiscountCodeUsages::class, 'discount_code_id', 'id');
-    }
-
-    /**
-     * Orders
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function orders()
-    {
-        return $this->belongsToMany(HCECOrders::class, HCECDiscountCodes::getTable(), 'discount_code_id', 'order_id')->withPivot('id', 'deleted_at')->withTimestamps();
     }
 }
