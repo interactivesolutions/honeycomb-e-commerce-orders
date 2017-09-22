@@ -6,6 +6,7 @@ use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommercecarriers\app\models\ecommerce\HCECCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\carts\HCECCartItems;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\pricerules\HCECDiscountCodes;
 
 class HCECCarts extends HCUuidModel
 {
@@ -51,6 +52,16 @@ class HCECCarts extends HCUuidModel
     public function carrier()
     {
         return $this->belongsToMany(HCECCarriers::class, HCECCartCarrier::getTableName(), 'cart_id', 'carrier_id')->withTimestamps()->withPivot('note');
+    }
+
+    /**
+     * Discount code
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function discount_code()
+    {
+        return $this->belongsToMany(HCECDiscountCodes::class, HCECCartDiscountCode::getTableName(), 'cart_id', 'discount_code_id')->withTimestamps();
     }
 
     /**
