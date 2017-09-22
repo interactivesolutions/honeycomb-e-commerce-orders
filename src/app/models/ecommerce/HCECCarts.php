@@ -125,6 +125,9 @@ class HCECCarts extends HCUuidModel
         // delete cart carrier
         HCECCartCarrier::where('cart_id', $cartId)->delete();
 
+        // delete cart carrier
+        HCECCartDiscountCode::where('cart_id', $cartId)->delete();
+
         // delete cart
         (new static())->where('id', $cartId)->forceDelete();
     }

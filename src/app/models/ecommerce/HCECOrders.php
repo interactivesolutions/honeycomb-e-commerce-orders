@@ -115,5 +115,14 @@ class HCECOrders extends HCUuidModel
         return $this->hasOne(HCECOrderInvoices::class, 'order_id', 'id');
     }
 
+    /**
+     * Relation to table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_discount_code()
+    {
+        return $this->hasOne(HCECOrderDiscountCodes::class, 'order_id', 'id');
+    }
 
 }
