@@ -7,6 +7,7 @@ use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
+use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDiscountCodes;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderHistory;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderInvoices;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderStates;
@@ -118,7 +119,7 @@ class HCECOrders extends HCUuidModel
     /**
      * Relation to table
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function order_discount_code()
     {
