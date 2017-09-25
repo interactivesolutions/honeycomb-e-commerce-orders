@@ -30,4 +30,30 @@ class HCECOrderDiscountCodes extends HCUuidModel
     {
         return $this->belongsTo(HCECOrders::class, 'order_id', 'id');
     }
+
+    /**
+     * Discount text
+     *
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function discountText()
+    {
+        if( $this->type == 'percentage' ) {
+            if( $this->shipping_included ) {
+                $text = trans('HCECommerceOrders::e_commerce_orders_discount_codes.percentage_discount_with_shipping', ['amount' => $this->amount]);
+            } else {
+                $text = trans('HCECommerceOrders::e_commerce_orders_discount_codes.percentage_discount_without_shipping', ['amount' => $this->amount]);
+            }
+        } else if( $this->type == 'fixed' ) {
+            if( $this->shipping_included ) {
+                $text = trans('HCECommerceOrders::e_commerce_orders_discount_codes.fixed_discount_with_shipping', ['amount' => $this->amount]);
+            } else {
+                $text = trans('HCECommerceOrders::e_commerce_orders_discount_codes.fixed_discount_without_shipping', ['amount' => $this->amount]);
+            }
+        } else {
+            $text = trans('HCECommerceOrders::e_commerce_orders_discount_codes.none_discount');
+        }
+
+        return $text;
+    }
 }
