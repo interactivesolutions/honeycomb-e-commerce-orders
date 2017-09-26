@@ -16,5 +16,6 @@ return [
     'company_code'   => 'Įmonės kodas',
     'company_vat'    => 'PVM kodas',
 
-    'full_name' => 'Vardas',
+    'full_name'   => 'Vardas',
+    'client_info' => 'Kliento informacija',
 ];

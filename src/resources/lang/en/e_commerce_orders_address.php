@@ -16,5 +16,6 @@ return [
     'company_code'   => 'Company code',
     'company_vat'    => 'Company vat',
 
-    'full_name' => 'Full name',
+    'full_name'   => 'Full name',
+    'client_info' => 'Client info',
 ];

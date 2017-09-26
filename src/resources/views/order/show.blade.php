@@ -164,51 +164,54 @@
 
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_info') }}</h3>
-                        </div>
-                        <div class="box-body">
-
-                            <div class="description-block">
-                                <h5 class="description-header">{{ $config['order']->order_carriers->name  }}</h5>
+                @if($config['order']->order_carriers)
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_info') }}</h3>
                             </div>
+                            <div class="box-body">
 
-                            <dl class="dl-horizontal">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{ $config['order']->order_carriers->name  }}</h5>
+                                </div>
 
-                                @if($config['order']->order_carriers->tracking_number)
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tracking_number') }}</dt>
-                                    <dd>{{ $config['order']->order_carriers->tracking_number }}</dd>
-                                @endif
+                                <dl class="dl-horizontal">
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_address') }}</dt>
-                                <dd>
-                                    {{ $config['order']->order_address->street_address }}
-                                    , {{ $config['order']->order_address->city }}
-                                    , LT-{{ $config['order']->order_address->postal_code }}
-                                </dd>
+                                    @if($config['order']->order_carriers->tracking_number)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tracking_number') }}</dt>
+                                        <dd>{{ $config['order']->order_carriers->tracking_number }}</dd>
+                                    @endif
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
-                                <dd>{{ hcprice()->round($config['order']->order_carriers->shipping_price) }}</dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_address') }}</dt>
+                                    <dd>
+                                        {{ $config['order']->order_address->street_address }}
+                                        , {{ $config['order']->order_address->city }}
+                                        , LT-{{ $config['order']->order_address->postal_code }}
+                                    </dd>
 
-                                @if($config['order']->order_carriers->tax_name)
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_name') }}</dt>
-                                    <dd>{{ $config['order']->order_carriers->tax_name }}</dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
+                                    <dd>{{ hcprice()->round($config['order']->order_carriers->shipping_price) }}</dd>
 
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_value') }}</dt>
-                                    <dd>{{ $config['order']->order_carriers->tax_value }}</dd>
-                                @endif
+                                    @if($config['order']->order_carriers->tax_name)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_name') }}</dt>
+                                        <dd>{{ $config['order']->order_carriers->tax_name }}</dd>
 
-                                @if($config['order']->order_carriers->user_note)
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.note') }}</dt>
-                                    <dd>{{ $config['order']->order_carriers->user_note }}</dd>
-                                @endif
-                            </dl>
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_value') }}</dt>
+                                        <dd>{{ $config['order']->order_carriers->tax_value }}</dd>
+                                    @endif
 
+                                    @if($config['order']->order_carriers->user_note)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.note') }}</dt>
+                                        <dd>{{ $config['order']->order_carriers->user_note }}</dd>
+                                    @endif
+                                </dl>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
+
 
                 <div class="col-md-6">
                     <div class="box box-primary">
