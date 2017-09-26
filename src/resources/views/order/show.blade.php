@@ -114,11 +114,40 @@
 
                 <div class="col-md-6">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Užsakymo istorija</h3>
+                        <div class="box-header no-border">
+                            <h3 class="box-title">{{ trans('HCECommerceOrders::e_commerce_orders_history.page_title') }}</h3>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ trans('HCECommerceOrders::e_commerce_orders_history.time') }}</th>
+                                    <th>{{ trans('HCECommerceOrders::e_commerce_orders_history.action') }}</th>
+                                    <th>{{ trans('HCECommerceOrders::e_commerce_orders_history.note') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($config['order']->history->isNotEmpty())
 
+                                    @foreach($config['order']->history as $history)
+                                        <tr class="{{ $history->type == 'order-state' ? 'warning' : 'success' }}">
+                                            <td>{{ $history->created_at }}</td>
+                                            <td>
+                                                @if($history->type == 'order-state')
+                                                    {{ $history->order_state->title }}
+                                                @else
+                                                    {{ $history->order_payment_status->title }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ $history->note }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

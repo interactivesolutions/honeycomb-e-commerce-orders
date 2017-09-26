@@ -7,6 +7,9 @@ return [
     'order_payment_status_id' => 'Užsakymo apmokėjimo statusas',
     'note'                    => 'Pastabos',
 
+    'action' => 'Veiksmas',
+    'time'   => 'Laikas',
+
     'types' => [
         'order-state'    => 'Užsakymo busena',
         'payment-status' => 'Apmokėjimo statusas',

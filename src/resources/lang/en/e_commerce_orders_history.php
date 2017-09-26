@@ -7,6 +7,9 @@ return [
     'order_payment_status_id' => 'Order payment status',
     'note'                    => 'Note',
 
+    'action' => 'Action',
+    'time'   => 'Time',
+
     'types' => [
         'order-state'    => 'Order state',
         'payment-status' => 'Order payment status',
