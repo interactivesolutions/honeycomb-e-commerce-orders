@@ -78,7 +78,7 @@
                                 <div class="col-sm-6">
                                     <div class="description-block">
                                         <h5 class="description-header">{{ trans('HCECommerceOrders::e_commerce_orders.state') }}</h5>
-                                        <span class="description-text">{{ array_get($config, 'order.order_state.title')  }}</span>
+                                        <span class="description-text">{{ array_get($config, 'order.order_state.title', '-')  }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -155,7 +155,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="col-md-12">
             <div class="row">
@@ -383,9 +382,5 @@
 
         </div>
     </div>
-
-@endsection
-
-@section('scripts')
 
 @endsection
