@@ -12,4 +12,10 @@ return [
     'tax_value'                 => 'Mokesčio reikšmė',
     'user_note'                 => 'Vartotojo pastaba',
     'tracking_number'           => 'Siuntimo numeris',
+
+    'shipping'         => 'Pristatymas',
+    'shipping_info'    => 'Pristatymo informacija',
+    'note'             => 'Komentaras',
+    'shipping_address' => 'Pristatymo adresas',
+
 ];

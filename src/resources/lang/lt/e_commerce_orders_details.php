@@ -25,4 +25,6 @@ return [
     'discounts'              => 'Nuolaida',
     'discounts_before_tax'   => 'Nuolaida be mokesčių',
     'discounts_tax_amount'   => 'Nuolaidos mokesčių kiekis',
+
+    'products' => 'Prekės',
 ];

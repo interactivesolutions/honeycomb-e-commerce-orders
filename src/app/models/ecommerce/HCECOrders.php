@@ -4,6 +4,7 @@ namespace interactivesolutions\honeycombecommerceorders\app\models\ecommerce;
 
 use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\models\HCUuidModel;
+use interactivesolutions\honeycombcore\models\traits\CustomAppends;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderCarriers;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderDetails;
@@ -15,6 +16,8 @@ use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\pa
 
 class HCECOrders extends HCUuidModel
 {
+    use CustomAppends;
+
     /**
      * The database table used by the model.
      *
@@ -35,6 +38,16 @@ class HCECOrders extends HCUuidModel
         'order_note',
         'total_unit_price', 'total_unit_price_before_tax', 'total_unit_price_tax_amount',
     ];
+
+    /**
+     * Rules url
+     *
+     * @return string
+     */
+    public function getContentUrlAttribute()
+    {
+        return route('admin.routes.e.commerce.orders.{_id}.index', $this->id);
+    }
 
     /**
      * Relation to table

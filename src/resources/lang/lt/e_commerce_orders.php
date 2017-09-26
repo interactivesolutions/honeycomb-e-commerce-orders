@@ -21,6 +21,11 @@ return [
     'total_unit_price_before_tax' => 'Viso vieneto kaina be mokesčių',
     'total_unit_price_tax_amount' => 'Viso vieneto kaina mokesčių kiekis',
 
+    'order'          => 'Užsakymas',
+    'order_date'     => 'Užsakymo data',
+    'state'          => 'Būsena',
+    'payment_status' => 'Apmokėjimo statusas',
+
     'tabs' => [
         'status' => 'Statusas',
         'info'   => 'Informacija',

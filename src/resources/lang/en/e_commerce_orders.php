@@ -21,6 +21,11 @@ return [
     'total_unit_price_before_tax' => 'Total unit price before tax',
     'total_unit_price_tax_amount' => 'Total unit price tax amount',
 
+    'order'          => 'Order',
+    'order_date'     => 'Order date',
+    'state'          => 'Sate',
+    'payment_status' => 'Payment status',
+
     'tabs' => [
         'status' => 'Status',
         'info'   => 'Info',

@@ -12,4 +12,10 @@ return [
     'tax_value'                 => 'Tax value',
     'user_note'                 => 'User note',
     'tracking_number'           => 'Tracking number',
+
+    'shipping'         => 'Shipping',
+    'shipping_info'    => 'Shipping info',
+    'note'             => 'Note',
+    'shipping_address' => 'Shipping address',
+
 ];

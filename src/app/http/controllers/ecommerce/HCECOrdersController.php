@@ -112,12 +112,16 @@ class HCECOrdersController extends HCBaseController
 //                "type"  => "text",
 //                "label" => trans('HCECommerceOrders::e_commerce_orders.total_paid_tax_amount'),
 //            ],
-            'total_unit_price'                 => [
+            'total_unit_price'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.total_unit_price'),
             ],
             'order_note'                 => [
                 "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
+            ],
+            'content_url'                => [
+                "type"  => "external-button",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
             ],
         ];
@@ -229,6 +233,8 @@ class HCECOrdersController extends HCBaseController
 
         if( $select == null )
             $select = HCECOrders::getFillableFields();
+
+        HCECOrders::$customAppends = ['content_url'];
 
         $list = HCECOrders::with($with)->select($select)
             // add filters
