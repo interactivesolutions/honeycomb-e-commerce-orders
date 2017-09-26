@@ -52,7 +52,9 @@
                                 <small>{{ $config['order']->reference }}</small>
                             </h3>
                             <div class="box-tools pull-right">
-                                <a href="#" class="btn btn-box-tool" title="Invoice">
+                                <a href="{{ route(app()->getLocale() . '.order.invoice', [app()->getLocale(), $config['order']->id]) }}"
+                                   target="_blank"
+                                   class="btn btn-box-tool" title="Invoice">
                                     <i class="fa fa-print"></i>
                                 </a>
                             </div>
