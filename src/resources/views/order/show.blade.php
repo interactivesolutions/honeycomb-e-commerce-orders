@@ -103,6 +103,12 @@
                                             <dt>{{ trans('HCECommerceOrders::e_commerce_orders.total_paid') }}</dt>
                                             <dd>{{ hcprice()->round($config['order']->total_total_paid) }}</dd>
                                         </div>
+                                        @if(isset($config['order']->order_carriers->shipping_price))
+                                            <div>
+                                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
+                                                <dd>{{ hcprice()->round($config['order']->order_carriers->shipping_price) }}</dd>
+                                            </div>
+                                        @endif
                                         <div>
                                             <dt>{{ trans('HCECommerceOrders::e_commerce_orders.total_unit_price') }}</dt>
                                             <dd>{{ hcprice()->round($config['order']->total_unit_price) }}</dd>
@@ -184,7 +190,7 @@
                                 </dd>
 
                                 <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
-                                <dd>{{ $config['order']->order_carriers->shipping_price }}</dd>
+                                <dd>{{ hcprice()->round($config['order']->order_carriers->shipping_price) }}</dd>
 
                                 @if($config['order']->order_carriers->tax_name)
                                     <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_name') }}</dt>
