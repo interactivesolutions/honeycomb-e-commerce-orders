@@ -78,7 +78,7 @@
                                 <div class="col-sm-6">
                                     <div class="description-block">
                                         <h5 class="description-header">{{ trans('HCECommerceOrders::e_commerce_orders.state') }}</h5>
-                                        <span class="description-text">{{ $config['order']->order_state->title  }}</span>
+                                        <span class="description-text">{{ array_get($config, 'order.order_state.title')  }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -172,8 +172,10 @@
 
                             <dl class="dl-horizontal">
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tracking_number') }}</dt>
-                                <dd>{{ $config['order']->order_carriers->tracking_number }}</dd>
+                                @if($config['order']->order_carriers->tracking_number)
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tracking_number') }}</dt>
+                                    <dd>{{ $config['order']->order_carriers->tracking_number }}</dd>
+                                @endif
 
                                 <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_address') }}</dt>
                                 <dd>
