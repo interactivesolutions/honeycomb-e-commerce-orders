@@ -9,6 +9,14 @@ return [
     'amount'            => 'Kiekis',
     'shipping_included' => 'Įskaitant pristatymą',
     'free_shipping'     => 'Nemokamas pristatymas',
+    'discount_code'     => 'Nuolaidos kodas',
+    'discount_text'     => 'Nuolaidos tekstas',
+
+    'types' => [
+        'percentage' => 'Procentaliai',
+        'fixed'      => 'Fiksuota kaina',
+        'none'       => 'Nėra nuolaidų',
+    ],
 
     'percentage_discount_with_shipping'    => 'Nuolaida :amount% visam krepšeliui',
     'percentage_discount_without_shipping' => 'Nuolaida :amount% krepšelio prekėms',

@@ -17,7 +17,7 @@ class HCECOrderShowController extends HCBaseController
     {
         $order = HCECOrders::findOrFail($orderId);
 
-        $order->load(['details.warehouse', 'order_address', 'order_carriers', 'order_discount_code', 'order_state', 'order_payment_status']);
+        $order->load(['details.warehouse', 'order_address', 'order_carriers.carrier', 'order_discount_code', 'order_state', 'order_payment_status']);
 
         $config = [
             'title' => trans('HCECommerceOrders::e_commerce_order_show.page_title'),
