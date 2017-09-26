@@ -133,7 +133,7 @@
 
                                     @foreach($config['order']->history as $history)
                                         <tr class="{{ $history->type == 'order-state' ? 'warning' : 'success' }}">
-                                            <td>{{ $history->created_at }}</td>
+                                            <td style="width: 140px;vertical-align: middle;">{{ $history->created_at }}</td>
                                             <td>
                                                 @if($history->type == 'order-state')
                                                     {{ $history->order_state->title }}
