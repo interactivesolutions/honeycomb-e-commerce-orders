@@ -18,9 +18,9 @@ return [
         'none'       => 'Nėra nuolaidų',
     ],
 
-    'percentage_discount_with_shipping'    => 'Nuolaida :amount% visam krepšeliui',
-    'percentage_discount_without_shipping' => 'Nuolaida :amount% krepšelio prekėms',
-    'fixed_discount_with_shipping'         => 'Nuolaida -:amount€ visam krepšeliui',
-    'fixed_discount_without_shipping'      => 'Nuolaida -:amount€ krepšelio prekėms',
+    'percentage_discount_with_shipping'    => ':amount % nuolaida visam krepšeliui',
+    'percentage_discount_without_shipping' => ':amount % nuolaida krepšelio prekėms',
+    'fixed_discount_with_shipping'         => ':amount € nuolaida visam krepšeliui',
+    'fixed_discount_without_shipping'      => ':amount € nuolaida krepšelio prekėms',
     'none_discount'                        => 'Nemokamas pristatymas',
 ];
