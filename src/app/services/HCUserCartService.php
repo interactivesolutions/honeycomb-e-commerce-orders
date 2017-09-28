@@ -2,6 +2,7 @@
 
 namespace interactivesolutions\honeycombecommerceorders\app\services;
 
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\carts\HCECCartItems;
 use interactivesolutions\honeycombecommercewarehouse\app\models\ecommerce\warehouses\stock\HCECStockSummary;
 
@@ -120,13 +121,26 @@ class HCUserCartService
     protected function checkStockBalance($goodsId, $combinationId, $amount)
     {
         // check if goods is available
-        $available = HCECStockSummary::where([
+        $stocks = HCECStockSummary::where([
             'good_id'        => $goodsId,
             'combination_id' => $combinationId,
-        ])->sum('on_sale');
+        ])->get();
+
+        $available = $stocks->sum('on_sale');
 
         if( $available == 0 || $available < $amount ) {
-            throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough', ['available' => $available]));
+
+            $good = HCECGoods::find($goodsId);
+
+            if( is_null($good) || ! $good->allow_pre_order ) {
+                throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough', ['available' => $available]));
+            }
+
+            $availableToPreOrder = $good->pre_order_count - $stocks->sum('pre_ordered');
+
+            if( $availableToPreOrder < 0 || $amount > $availableToPreOrder ) {
+                throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough_to_pre_order', ['available' => $availableToPreOrder]));
+            }
         }
     }
 }
