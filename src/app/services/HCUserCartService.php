@@ -130,6 +130,7 @@ class HCUserCartService
 
         if( $available == 0 || $available < $amount ) {
 
+            // TODO Improve when multiple warehouses will be used
             $good = HCECGoods::find($goodsId);
 
             if( is_null($good) || ! $good->allow_pre_order ) {
