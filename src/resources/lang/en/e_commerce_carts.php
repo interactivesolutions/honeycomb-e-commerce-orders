@@ -8,7 +8,7 @@ return [
     'errors' => [
         'not_found'               => 'Something is wrong with cart!',
         'item_not_found'          => 'Something is wrong with cart item!',
-        'not_enough'              => 'Not much items left in stock. Available :available',
-        'not_enough_to_pre_order' => 'Can reserve any more products. Available to reserve :available',
+        'not_enough'              => 'Insufficient balance of goods. Available to buy :available products',
+        'not_enough_to_pre_order' => 'Insufficient balance of goods. You can buy :on_sale products or reserve :pre_order products',
     ],
 ];

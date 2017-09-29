@@ -141,7 +141,7 @@ class HCUserCartService
             $availableToPreOrder = $good->pre_order_count - $stocks->sum('pre_ordered');
 
             if( $availableToPreOrder < 0 || $amount > $availableToPreOrder ) {
-                throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough_to_pre_order', ['available' => $availableToPreOrder]));
+                throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough_to_pre_order', ['on_sale' => $available, 'pre_order' => $availableToPreOrder]));
             }
 
             return 'reserved';
