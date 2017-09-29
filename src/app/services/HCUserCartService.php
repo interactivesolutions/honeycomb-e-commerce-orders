@@ -15,7 +15,7 @@ class HCUserCartService
      * @param $goodsId
      * @param $combinationId
      * @param $amount
-     * @return
+     * @return array
      * @throws \Exception
      */
     public function add($cartId, $goodsId, $combinationId, $amount = 1)
@@ -34,12 +34,12 @@ class HCUserCartService
 
         $finalAmount = $item->amount + $amount;
 
-        $this->checkStockBalance($goodsId, $combinationId, $finalAmount);
+        $typeAdded = $this->checkStockBalance($goodsId, $combinationId, $finalAmount);
 
         $item->amount = $finalAmount;
         $item->save();
 
-        return $item;
+        return [$typeAdded, $item];
     }
 
     /**
@@ -48,7 +48,7 @@ class HCUserCartService
      * @param $cartId
      * @param $cartItemId
      * @param $amount
-     * @return
+     * @return array
      * @throws \Exception
      */
     public function update($cartId, $cartItemId, $amount)
@@ -67,12 +67,12 @@ class HCUserCartService
             throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.item_not_found'));
         }
 
-        $this->checkStockBalance($cartItem->goods_id, $cartItem->combination_id, $amount);
+        $typeAdded = $this->checkStockBalance($cartItem->goods_id, $cartItem->combination_id, $amount);
 
         $cartItem->amount = $amount;
         $cartItem->save();
 
-        return $cartItem;
+        return [$typeAdded, $cartItem];
     }
 
     /**
@@ -116,6 +116,7 @@ class HCUserCartService
      * @param $goodsId
      * @param $combinationId
      * @param $amount
+     * @return string
      * @throws \Exception
      */
     protected function checkStockBalance($goodsId, $combinationId, $amount)
@@ -142,6 +143,10 @@ class HCUserCartService
             if( $availableToPreOrder < 0 || $amount > $availableToPreOrder ) {
                 throw new \Exception(trans('HCECommerceOrders::e_commerce_carts.errors.not_enough_to_pre_order', ['available' => $availableToPreOrder]));
             }
+
+            return 'reserved';
         }
+
+        return 'normal';
     }
 }
