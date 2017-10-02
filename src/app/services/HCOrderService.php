@@ -43,8 +43,8 @@ class HCOrderService
         // when order payment status is changing
         if( $order->order_payment_status_id != $newOrderPaymentStatusId ) {
             if( $newOrderPaymentStatusId == 'payment-accepted' ) {
-                if( $newOrderStateId != 'ready-for-processing' && ! is_null($newOrderStateId) ) {
-                    throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.payment_accepted_but_not_ready'));
+                if( ! is_null($newOrderStateId) ) {
+                    throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.payment_accepted_and_order_state_null'));
                 }
 
                 $this->paymentAccepted($order, $note);

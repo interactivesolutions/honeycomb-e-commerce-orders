@@ -32,8 +32,8 @@ return [
     ],
 
     'errors' => [
-        'order_canceled'                 => 'Order is already canceled. There is nothing you can do.',
-        'payment_accepted_but_not_ready' => 'After "payment accept" order status must be "ready for processing"',
+        'order_canceled'                        => 'Order is already canceled. There is nothing you can do.',
+        'payment_accepted_and_order_state_null' => 'After "payment accept" order state must not be selected (order state will be set by system)',
 
         'not_ready_for_processing'                => '"Processing in progress" can be selected when order status is "ready for processing"',
         'not_ready_for_shipment_after_processing' => '"Ready for shipment" can be selected when order status is "processing in progress"',
