@@ -25,6 +25,7 @@ return [
     'order_date'     => 'Order date',
     'state'          => 'Sate',
     'payment_status' => 'Payment status',
+    'view_content'   => 'View order content',
 
     'tabs' => [
         'status' => 'Status',

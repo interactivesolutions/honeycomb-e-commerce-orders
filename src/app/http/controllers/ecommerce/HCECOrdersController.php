@@ -122,7 +122,7 @@ class HCECOrdersController extends HCBaseController
             ],
             'content_url'                => [
                 "type"  => "external-button",
-                "label" => trans('HCECommerceOrders::e_commerce_orders.order_note'),
+                "label" => trans('HCECommerceOrders::e_commerce_orders.view_content'),
             ],
         ];
     }

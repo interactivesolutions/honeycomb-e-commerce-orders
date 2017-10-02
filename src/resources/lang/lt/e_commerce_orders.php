@@ -25,6 +25,7 @@ return [
     'order_date'     => 'Užsakymo data',
     'state'          => 'Būsena',
     'payment_status' => 'Apmokėjimo statusas',
+    'view_content'   => 'Žiūrėti informaciją',
 
     'tabs' => [
         'status' => 'Statusas',
