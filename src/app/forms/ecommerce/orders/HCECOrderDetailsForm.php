@@ -156,6 +156,23 @@ class HCECOrderDetailsForm
                     "required"        => 0,
                     "requiredVisible" => 0,
                 ],
+                [
+                    "type"            => "radioList",
+                    "fieldID"         => "is_pre_ordered",
+                    "label"           => trans("HCECommerceOrders::e_commerce_orders_details.is_pre_ordered"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "options"         => [
+                        [
+                            'id'    => '1',
+                            'label' => trans('HCTranslations::core.yes'),
+                        ],
+                        [
+                            'id'    => '0',
+                            'label' => trans('HCTranslations::core.no'),
+                        ],
+                    ],
+                ],
             ],
         ];
 

@@ -25,6 +25,7 @@ return [
     'discounts'              => 'Discounts',
     'discounts_before_tax'   => 'Discounts before tax',
     'discounts_tax_amount'   => 'Discounts tax amount',
+    'is_pre_ordered'         => 'Is pre ordered',
 
     'products' => 'Products',
 ];

@@ -23,13 +23,39 @@ class HCECOrderDetails extends HCUuidModel
      * @var array
      */
     protected $fillable = [
-        'id', 'order_id', 'good_id', 'combination_id', 'warehouse_id', 'tax_name', 'tax_value', 'amount', 'reference', 'name',
+        'id', 'order_id', 'good_id', 'combination_id', 'warehouse_id', 'tax_name', 'tax_value', 'amount', 'reference', 'name', 'is_pre_ordered',
         'price', 'price_before_tax', 'price_tax_amount',
         'total_price', 'total_price_before_tax', 'total_price_tax_amount',
         'unit_price', 'unit_price_before_tax', 'unit_price_tax_amount',
         'discount_type', 'discount_amount',
         'discounts', 'discounts_before_tax', 'discounts_tax_amount',
     ];
+
+    /**
+     * Pre ordered query scope
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsPreOrdered($query)
+    {
+        return $query->where(function($query) {
+            $query->where('is_pre_ordered', '1');
+        });
+    }
+
+    /**
+     * Not pre ordered query scope
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsNotPreOrdered($query)
+    {
+        return $query->where(function($query) {
+            $query->where('is_pre_ordered', '0');
+        });
+    }
 
     /**
      * Relation to table

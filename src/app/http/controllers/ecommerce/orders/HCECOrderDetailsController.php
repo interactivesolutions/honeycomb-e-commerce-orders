@@ -306,6 +306,7 @@ class HCECOrderDetailsController extends HCBaseController
         array_set($data, 'record.total_price', array_get($_data, 'total_price'));
         array_set($data, 'record.total_price_before_tax', array_get($_data, 'total_price_before_tax'));
         array_set($data, 'record.total_price_tax_amount', array_get($_data, 'total_price_tax_amount'));
+        array_set($data, 'record.is_pre_ordered', array_get($_data, 'is_pre_ordered'));
 
         return $data;
     }

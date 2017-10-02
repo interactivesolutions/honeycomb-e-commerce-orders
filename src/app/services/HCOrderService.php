@@ -267,7 +267,11 @@ class HCOrderService
         $stockService = new HCStockService();
 
         foreach ( $details as $detail ) {
-            $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+            if($method == 'cancelReserved' && $detail->is_reserved_for_pre_order) {
+                $stockService->removePreOrdered($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+            } else {
+                $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+            }
         }
     }
 
