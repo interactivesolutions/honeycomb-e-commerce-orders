@@ -40,6 +40,19 @@
                         </div>
                     </div>
                 </div>
+
+                @if($config['order']->details->contains('is_pre_ordered', '1'))
+                    <div class="col-sm-4 col-md-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-minus-circle"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">{{ trans('HCECommerceOrders::e_commerce_orders_details.is_pre_ordered') }}</span>
+                                <span class="info-box-number">{{ $config['order']->details->where('is_pre_ordered', '1')->sum('amount') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -329,8 +342,14 @@
                         </tr>
 
                         @foreach($config['order']->details as $detail)
-                            <tr>
-                                <td>{{ $detail->name }}</td>
+                            <tr class="{{ $detail->is_pre_ordered ? 'danger' : ''}}">
+                                <td>{{ $detail->name }}
+                                    @if($detail->is_pre_ordered)
+                                        <span class="label label-danger text-uppercase">
+                                            {{ trans('HCECommerceOrders::e_commerce_orders_details.is_pre_ordered') }}
+                                        </span>
+                                    @endif
+                                </td>
                                 <td>{{ $detail->reference }}</td>
                                 <td>{{ $detail->warehouse->name }}</td>
                                 @if($detail->discounts)

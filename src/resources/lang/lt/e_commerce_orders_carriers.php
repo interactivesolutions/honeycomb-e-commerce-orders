@@ -5,7 +5,7 @@ return [
     'carrier_id'                => 'Vežėjas',
     'name'                      => 'Pavadinimas',
     'weight'                    => 'Svoris',
-    'shipping_price'            => 'Pristatyo kaina',
+    'shipping_price'            => 'Pristatymo kaina',
     'shipping_price_before_tax' => 'Pristatymo kaina be mokesčių',
     'shipping_tax_amount'       => 'Pristatymo mokesčiai',
     'tax_name'                  => 'Mokesčio pavadinimas',
