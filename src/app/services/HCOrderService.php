@@ -13,33 +13,37 @@ class HCOrderService
 {
     /**
      * @param $order
-     * @param $orderStateId
-     * @param $orderPaymentStatusId
+     * @param $newOrderStateId
+     * @param $newOrderPaymentStatusId
      * @param null $note
      * @throws \Exception
      */
-    public function handleUpdate($order, $orderStateId, $orderPaymentStatusId, $note = null)
+    public function handleUpdate($order, $newOrderStateId, $newOrderPaymentStatusId, $note = null)
     {
         if( $order->order_state_id == 'canceled' || $order->order_state_id == 'canceled-and-restored' ) {
             throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.order_canceled'));
         }
 
-        if( $orderStateId == 'canceled' ) {
+        if( $newOrderStateId == 'canceled' ) {
             // update order_state to canceled
             $this->canceled($order, $note);
 
             return;
-        } else if( $orderStateId == 'canceled-and-restored' ) {
+        } else if( $newOrderStateId == 'canceled-and-restored' ) {
             // update order_state to canceled-and-restored
             $this->canceledAndRestored($order, $note);
 
             return;
         }
 
+        if( $order->order_state_id == 'waiting-for-stock' ) {
+            throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.waiting_for_stock_only_cancel'));
+        }
+
         // when order payment status is changing
-        if( $order->order_payment_status_id != $orderPaymentStatusId ) {
-            if( $orderPaymentStatusId == 'payment-accepted' ) {
-                if( $orderStateId != 'ready-for-processing' && ! is_null($orderStateId) ) {
+        if( $order->order_payment_status_id != $newOrderPaymentStatusId ) {
+            if( $newOrderPaymentStatusId == 'payment-accepted' ) {
+                if( $newOrderStateId != 'ready-for-processing' && ! is_null($newOrderStateId) ) {
                     throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.payment_accepted_but_not_ready'));
                 }
 
@@ -47,14 +51,14 @@ class HCOrderService
             }
 
             // when order payment status not changing but changing order state
-        } else if( $order->order_payment_status_id == $orderPaymentStatusId ) {
+        } else if( $order->order_payment_status_id == $newOrderPaymentStatusId ) {
 
             // if order is already paid
-            if( $orderPaymentStatusId == 'payment-accepted' ) {
+            if( $newOrderPaymentStatusId == 'payment-accepted' ) {
 
-                if( $order->order_state_id != $orderStateId ) {
+                if( $order->order_state_id != $newOrderStateId ) {
 
-                    if( $orderStateId == 'processing-in-progress' ) {
+                    if( $newOrderStateId == 'processing-in-progress' ) {
                         if( $order->order_state_id != 'ready-for-processing' ) {
                             throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_processing'));
                         }
@@ -62,7 +66,7 @@ class HCOrderService
                         // update order_state to ready for processing
                         $this->processing($order, $note);
 
-                    } else if( $orderStateId == 'ready-for-shipment' ) {
+                    } else if( $newOrderStateId == 'ready-for-shipment' ) {
 
                         if( $order->order_state_id != 'processing-in-progress' ) {
                             throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_shipment_after_processing'));
@@ -71,7 +75,7 @@ class HCOrderService
                         // update order_state to shipped
                         $this->readyForShipment($order, $note);
 
-                    } else if( $orderStateId == 'shipped' ) {
+                    } else if( $newOrderStateId == 'shipped' ) {
 
                         if( $order->order_state_id != 'ready-for-shipment' ) {
                             throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_shipment'));
@@ -80,7 +84,7 @@ class HCOrderService
                         // update order_state to shipped
                         $this->shipped($order, $note);
 
-                    } else if( $orderStateId == 'delivered' ) {
+                    } else if( $newOrderStateId == 'delivered' ) {
 
                         if( $order->order_state_id != 'shipped' ) {
                             throw new \Exception(trans('HCECommerceOrders::e_commerce_orders.errors.not_ready_for_delivered'));
@@ -102,14 +106,36 @@ class HCOrderService
      */
     public function paymentAccepted($order, $note)
     {
-        // update order_state to ready for processing
-        $this->readyForProcessing($order, $note);
+        $order->load('details');
+
+        if( $order->details->contains('is_pre_ordered', '1') ) {
+            // update order_state to waiting for stock
+            $this->waitingForStock($order, $note);
+        } else {
+            // update order_state to ready for processing
+            $this->readyForProcessing($order, $note);
+        }
 
         // log history
         $this->_logHistory($order->id, 'payment-status', null, 'payment-accepted', $note);
 
         // call event
         event(new HCECOrderPaymentAccepted($order));
+    }
+
+    /**
+     * Waiting for stock
+     *
+     * @param $order
+     * @param $note
+     */
+    public function waitingForStock($order, $note)
+    {
+        $order->order_payment_status_id = 'payment-accepted';
+        $order->order_state_id = 'waiting-for-stock';
+        $order->save();
+
+        $this->_logHistory($order->id, 'order-state', 'waiting-for-stock', null, $note);
     }
 
     /**
@@ -240,17 +266,17 @@ class HCOrderService
      *
      * @param $id
      * @param $type
-     * @param $orderStateId
-     * @param $orderPaymentStatusId
+     * @param $newOrderStateId
+     * @param $newOrderPaymentStatusId
      * @param $note
      */
-    protected function _logHistory($id, $type, $orderStateId, $orderPaymentStatusId, $note)
+    protected function _logHistory($id, $type, $newOrderStateId, $newOrderPaymentStatusId, $note)
     {
         HCECOrderHistory::create([
             'order_id'                => $id,
             'type'                    => $type,
-            'order_state_id'          => $orderStateId,
-            'order_payment_status_id' => $orderPaymentStatusId,
+            'order_state_id'          => $newOrderStateId,
+            'order_payment_status_id' => $newOrderPaymentStatusId,
             'note'                    => $note,
         ]);
     }
@@ -267,7 +293,7 @@ class HCOrderService
         $stockService = new HCStockService();
 
         foreach ( $details as $detail ) {
-            if($method == 'cancelReserved' && $detail->is_reserved_for_pre_order) {
+            if( $method == 'cancelReserved' && $detail->is_reserved_for_pre_order ) {
                 $stockService->removePreOrdered($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
             } else {
                 $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);

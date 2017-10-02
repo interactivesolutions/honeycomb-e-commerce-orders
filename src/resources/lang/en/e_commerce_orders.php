@@ -39,5 +39,6 @@ return [
         'not_ready_for_shipment_after_processing' => '"Ready for shipment" can be selected when order status is "processing in progress"',
         'not_ready_for_shipment'                  => '"Order shipped" can be selected when order status is "ready for shipment"',
         'not_ready_for_delivered'                 => '"Order delivered" can be selected when order status is "shipped"',
+        'waiting_for_stock_only_cancel'           => 'When order state is "waiting-for-stock" then you can only cancel order',
     ],
 ];
