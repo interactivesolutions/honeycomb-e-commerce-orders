@@ -91,7 +91,15 @@
                                 <div class="col-sm-6">
                                     <div class="description-block">
                                         <h5 class="description-header">{{ trans('HCECommerceOrders::e_commerce_orders.state') }}</h5>
-                                        <span class="description-text">{{ array_get($config, 'order.order_state.title', '-')  }}</span>
+                                        <span class="description-text">
+                                            @if(in_array($config['order']->order_state_id, ['canceled-and-restored', 'canceled']))
+                                                <span class="label label-danger">
+                                                    {{ array_get($config, 'order.order_state.title', '-')  }}
+                                                </span>
+                                            @else
+                                                {{ array_get($config, 'order.order_state.title', '-')  }}
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
