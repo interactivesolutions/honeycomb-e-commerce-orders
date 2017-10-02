@@ -16,6 +16,9 @@ class HCECOrderStatesSeed extends Seeder
     {
         $states = [
             [
+                'id' => 'waiting-for-stock',
+            ],
+            [
                 'id' => 'ready-for-processing',
             ],
             [

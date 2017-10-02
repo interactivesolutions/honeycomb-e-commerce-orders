@@ -41,7 +41,7 @@ class HCECOrdersForm
                     "tabID"           => trans("HCECommerceOrders::e_commerce_orders.tabs.status"),
                     "required"        => 1,
                     "requiredVisible" => 1,
-                    "options"         => HCECOrderPaymentStatus::get(),
+                    "options"         => HCECOrderPaymentStatus::orderBy('count')->get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
@@ -55,7 +55,7 @@ class HCECOrdersForm
                     "tabID"           => trans("HCECommerceOrders::e_commerce_orders.tabs.status"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                    "options"         => HCECOrderStates::get(),
+                    "options"         => HCECOrderStates::orderBy('count')->get(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
