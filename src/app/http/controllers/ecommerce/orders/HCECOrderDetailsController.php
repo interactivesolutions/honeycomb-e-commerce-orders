@@ -121,6 +121,10 @@ class HCECOrderDetailsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_details.unit_price'),
             ],
+            'is_pre_ordered'                     => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders_details.is_pre_ordered'),
+            ],
 //            'total_price_before_tax'         => [
 //                "type"  => "text",
 //                "label" => trans('HCECommerceOrders::e_commerce_orders_details.total_price_before_tax'),
