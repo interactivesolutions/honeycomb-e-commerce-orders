@@ -226,6 +226,16 @@ class HCOrderService
             return;
         }
 
+        $orderDetails = $order->details()->get();
+
+        $stockService = new HCStockService();
+
+        foreach ( $orderDetails as $detail ) {
+            if( $detail->is_pre_ordered ) {
+                $stockService->cancelPreOrdered($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+            }
+        }
+
         $order->order_state_id = 'canceled';
         $order->save();
 
@@ -293,8 +303,8 @@ class HCOrderService
         $stockService = new HCStockService();
 
         foreach ( $details as $detail ) {
-            if( $method == 'cancelReserved' && $detail->is_reserved_for_pre_order ) {
-                $stockService->removePreOrdered($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
+            if( $method == 'cancelReserved' && $detail->is_pre_ordered ) {
+                $stockService->cancelPreOrdered($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
             } else {
                 $stockService->{$method}($detail->good_id, $detail->combination_id, $detail->amount, $detail->warehouse_id, $note);
             }
