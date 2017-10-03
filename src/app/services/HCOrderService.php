@@ -109,8 +109,18 @@ class HCOrderService
         $order->load('details');
 
         if( $order->details->contains('is_pre_ordered', '1') ) {
-            // update order_state to waiting for stock
-            $this->waitingForStock($order, $note);
+
+            $stockService = new HCStockService();
+            $response = $stockService->reducePreOrdered($order);
+
+            if( $response ) {
+                // update order_state to ready for processing
+                $this->readyForProcessing($order, $note);
+            } else {
+                // update order_state to waiting for stock
+                $this->waitingForStock($order, $note);
+            }
+
         } else {
             // update order_state to ready for processing
             $this->readyForProcessing($order, $note);
