@@ -24,13 +24,6 @@ class HCECCartItems extends HCUuidModel
     protected $fillable = ['id', 'cart_id', 'goods_id', 'combination_id', 'amount'];
 
     /**
-     * Touch timestamps
-     *
-     * @var array
-     */
-    protected $touches = ['cart'];
-
-    /**
      * Relation to table
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
