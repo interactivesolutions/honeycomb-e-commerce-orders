@@ -50,6 +50,18 @@ class HCECOrders extends HCUuidModel
     }
 
     /**
+     * Rules url
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        if( $this->order_address ) {
+            return sprintf('%s %s', $this->order_address->first_name, $this->order_address->last_name);
+        }
+    }
+
+    /**
      * Relation to table
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

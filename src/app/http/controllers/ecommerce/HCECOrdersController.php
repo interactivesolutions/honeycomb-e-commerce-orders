@@ -64,7 +64,7 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
             ],
-            'user.email'                 => [
+            'full_name'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.user_id'),
             ],
@@ -229,12 +229,12 @@ class HCECOrdersController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['order_state', 'order_payment_status', 'user'];
+        $with = ['order_state', 'order_payment_status', 'user', 'order_address'];
 
         if( $select == null )
             $select = HCECOrders::getFillableFields();
 
-        HCECOrders::$customAppends = ['content_url'];
+        HCECOrders::$customAppends = ['content_url', 'full_name'];
 
         $list = HCECOrders::with($with)->select($select)
             // add filters
