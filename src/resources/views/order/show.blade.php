@@ -205,11 +205,16 @@
                                     @endif
 
                                     <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_address') }}</dt>
-                                    <dd>
-                                        {{ $config['order']->order_address->street_address }}
-                                        , {{ $config['order']->order_address->city }}
-                                        , LT-{{ $config['order']->order_address->postal_code }}
-                                    </dd>
+
+                                    @if($config['order']->order_carriers->location)
+                                        <dd>{{ $config['order']->order_carriers->location }}</dd>
+                                    @else
+                                        <dd>
+                                            {{ $config['order']->order_address->street_address }}
+                                            , {{ $config['order']->order_address->city }}
+                                            , LT-{{ $config['order']->order_address->postal_code }}
+                                        </dd>
+                                    @endif
 
                                     <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
                                     <dd>{{ hcprice()->round($config['order']->order_carriers->shipping_price) }}</dd>
@@ -220,11 +225,6 @@
 
                                         <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.tax_value') }}</dt>
                                         <dd>{{ $config['order']->order_carriers->tax_value }}</dd>
-                                    @endif
-
-                                    @if($config['order']->order_carriers->location)
-                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.location') }}</dt>
-                                        <dd>{{ $config['order']->order_carriers->location }}</dd>
                                     @endif
 
                                     @if($config['order']->order_carriers->user_note)
