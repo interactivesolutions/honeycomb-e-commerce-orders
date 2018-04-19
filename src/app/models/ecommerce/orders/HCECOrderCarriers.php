@@ -20,7 +20,7 @@ class HCECOrderCarriers extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'order_id', 'carrier_id', 'name', 'weight', 'shipping_price', 'shipping_price_before_tax', 'shipping_tax_amount', 'tax_name', 'tax_value', 'user_note', 'tracking_number'];
+    protected $fillable = ['id', 'order_id', 'carrier_id', 'name', 'weight', 'shipping_price', 'shipping_price_before_tax', 'shipping_tax_amount', 'tax_name', 'tax_value', 'user_note', 'tracking_number', 'location'];
 
     /**
      * Relation to order

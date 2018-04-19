@@ -222,6 +222,11 @@
                                         <dd>{{ $config['order']->order_carriers->tax_value }}</dd>
                                     @endif
 
+                                    @if($config['order']->order_carriers->location)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.location') }}</dt>
+                                        <dd>{{ $config['order']->order_carriers->location }}</dd>
+                                    @endif
+
                                     @if($config['order']->order_carriers->user_note)
                                         <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.note') }}</dt>
                                         <dd>{{ $config['order']->order_carriers->user_note }}</dd>

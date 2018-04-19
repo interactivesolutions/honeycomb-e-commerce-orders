@@ -19,7 +19,7 @@ class HCECCartCarrier extends HCModel
      *
      * @var array
      */
-    protected $fillable = ['cart_id', 'carrier_id', 'note'];
+    protected $fillable = ['cart_id', 'carrier_id', 'note', 'location'];
 
     /**
      * Relation to cart
