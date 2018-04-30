@@ -24,12 +24,12 @@ class HCECOrderPaymentStatusSeed extends Seeder
             [
                 'id' => 'payment-failed',
             ],
-//            [
-//                'id' => 'awaiting-paysera-payment',
-//            ],
-//            [
-//                'id' => 'paysera-payment-in-progress',
-//            ],
+            [
+                'id' => 'awaiting-paysera-payment',
+            ],
+            [
+                'id' => 'paysera-payment-in-progress',
+            ],
         ];
 
         foreach ( $statuses as $key => $status ) {
