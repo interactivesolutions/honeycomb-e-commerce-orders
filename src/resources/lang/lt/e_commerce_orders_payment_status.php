@@ -8,7 +8,6 @@ return [
     'payment-accepted'           => 'Apmokėjimas gautas',
     'payment-failed'             => 'Apmokėjimas neįvyko',
 
-//    'awaiting-paysera-payment'    => 'Laukiama apmokėjimo per "Paysera"',
-//    'paysera-payment-in-progress' => '"Paysera" mokėjimo nurodymas priimtas, bet dar neįvykdytas',
-
+    'awaiting-paysera-payment'    => 'Laukiama apmokėjimo per "Paysera"',
+    'paysera-payment-in-progress' => '"Paysera" mokėjimo nurodymas priimtas, bet dar neįvykdytas',
 ];

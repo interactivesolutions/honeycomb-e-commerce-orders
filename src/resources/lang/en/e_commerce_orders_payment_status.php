@@ -8,6 +8,6 @@ return [
     'payment-accepted'           => 'Payment accepted',
     'payment-failed'             => 'Payment failed',
 
-//    'awaiting-paysera-payment'    => 'Awaiting "Paysera" payment',
-//    'paysera-payment-in-progress' => '"Paysera" payment is in progress, but not completed',
+    'awaiting-paysera-payment'    => 'Awaiting "Paysera" payment',
+    'paysera-payment-in-progress' => '"Paysera" payment is in progress, but not completed',
 ];
