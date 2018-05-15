@@ -7,6 +7,10 @@ use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\HCECUserAddress;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\HCECUserAddressValidator;
 
+/**
+ * Class HCECUserAddressController
+ * @package interactivesolutions\honeycombecommerceorders\app\http\controllers\ecommerce
+ */
 class HCECUserAddressController extends HCBaseController
 {
 
@@ -20,24 +24,25 @@ class HCECUserAddressController extends HCBaseController
     public function adminIndex()
     {
         $config = [
-            'title'       => trans('HCECommerceOrders::e_commerce_address.page_title'),
-            'listURL'     => route('admin.api.routes.e.commerce.address'),
-            'newFormUrl'  => route('admin.api.form-manager', ['e-commerce-address-new']),
+            'title' => trans('HCECommerceOrders::e_commerce_address.page_title'),
+            'listURL' => route('admin.api.routes.e.commerce.address'),
+            'newFormUrl' => route('admin.api.form-manager', ['e-commerce-address-new']),
             'editFormUrl' => route('admin.api.form-manager', ['e-commerce-address-edit']),
-            'imagesUrl'   => route('resource.get', ['/']),
-            'headers'     => $this->getAdminListHeader(),
+            'imagesUrl' => route('resource.get', ['/']),
+            'headers' => $this->getAdminListHeader(),
         ];
 
 //        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_create') )
 //            $config['actions'][] = 'new';
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_update') ) {
+        if (auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if( auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_delete') )
+        if (auth()->user()->can('interactivesolutions_honeycomb_e_commerce_orders_routes_e_commerce_address_delete')) {
             $config['actions'][] = 'delete';
+        }
 
         $config['actions'][] = 'search';
         $config['filters'] = $this->getFilters();
@@ -53,64 +58,64 @@ class HCECUserAddressController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'user.email'          => [
-                "type"  => "text",
+            'user.email' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.user_id'),
             ],
-            'form_name'           => [
-                "type"  => "text",
+            'form_name' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.form_name'),
             ],
-            'first_name'          => [
-                "type"  => "text",
+            'first_name' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.first_name'),
             ],
-            'last_name'           => [
-                "type"  => "text",
+            'last_name' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.last_name'),
             ],
-            'email'               => [
-                "type"  => "text",
+            'email' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.email'),
             ],
             'country.translation' => [
-                "type"  => "text",
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.country_id'),
             ],
-            'street_address'      => [
-                "type"  => "text",
+            'street_address' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.street_address'),
             ],
-            'city'                => [
-                "type"  => "text",
+            'city' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.city'),
             ],
-            'district'            => [
-                "type"  => "text",
+            'district' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.district'),
             ],
-            'postal_code'         => [
-                "type"  => "text",
+            'postal_code' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.postal_code'),
             ],
-            'phone'               => [
-                "type"  => "text",
+            'phone' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.phone'),
             ],
-            'notes'               => [
-                "type"  => "text",
+            'notes' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.notes'),
             ],
-            'company_name'               => [
-                "type"  => "text",
+            'company_name' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.company_name'),
             ],
-            'company_code'               => [
-                "type"  => "text",
+            'company_code' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.company_code'),
             ],
-            'company_vat'               => [
-                "type"  => "text",
+            'company_vat' => [
+                "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.company_vat'),
             ],
 
@@ -164,12 +169,23 @@ class HCECUserAddressController extends HCBaseController
     /**
      * Delete records table
      *
-     * @param $list
+     * @param array $list
      * @return mixed
+     * @throws \Exception
      */
     protected function __apiDestroy(array $list)
     {
-        HCECUserAddress::destroy($list);
+        \DB::beginTransaction();
+
+        try {
+            HCECUserAddress::whereIn('id', $list)->forceDelete();
+        } catch (\Exception $e) {
+            \DB::rollback();
+
+            throw $e;
+        }
+
+        \DB::commit();
 
         return hcSuccess();
     }
@@ -210,8 +226,9 @@ class HCECUserAddressController extends HCBaseController
     {
         $with = ['user', 'country'];
 
-        if( $select == null )
+        if ($select == null) {
             $select = HCECUserAddress::getFillableFields();
+        }
 
         $list = HCECUserAddress::with($with)->select($select)
             // add filters
@@ -259,6 +276,7 @@ class HCECUserAddressController extends HCBaseController
      * Getting user data on POST call
      *
      * @return mixed
+     * @throws \Exception
      */
     protected function getInputData()
     {
@@ -266,8 +284,9 @@ class HCECUserAddressController extends HCBaseController
 
         $_data = request()->all();
 
-        if( array_has($_data, 'id') )
+        if (array_has($_data, 'id')) {
             array_set($data, 'record.id', array_get($_data, 'id'));
+        }
 
         array_set($data, 'record.user_id', array_get($_data, 'user_id'));
         array_set($data, 'record.form_name', array_get($_data, 'form_name'));
@@ -285,7 +304,7 @@ class HCECUserAddressController extends HCBaseController
         array_set($data, 'record.company_code', array_get($_data, 'company_code'));
         array_set($data, 'record.company_vat', array_get($_data, 'company_vat'));
 
-        return $data;
+        return makeEmptyNullable($data);
     }
 
     /**

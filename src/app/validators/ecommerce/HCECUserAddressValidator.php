@@ -1,7 +1,13 @@
-<?php namespace interactivesolutions\honeycombecommerceorders\app\validators\ecommerce;
+<?php
+
+namespace interactivesolutions\honeycombecommerceorders\app\validators\ecommerce;
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 
+/**
+ * Class HCECUserAddressValidator
+ * @package interactivesolutions\honeycombecommerceorders\app\validators\ecommerce
+ */
 class HCECUserAddressValidator extends HCCoreFormValidator
 {
     /**
@@ -12,15 +18,14 @@ class HCECUserAddressValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'form_name'      => 'required|min:3',
-            'first_name'     => 'required|min:3',
-            'last_name'      => 'required|min:3',
-            'email'          => 'required|email',
-            'country_id'     => 'required|exists:hc_regions_countries,id',
-            'street_address' => 'required|min:3',
-            'city'           => 'required|min:3',
-            'postal_code'    => 'required|numeric|min:5',
-            'phone'          => 'required|min:9',
+            'first_name' => 'required|min:1',
+            'last_name' => 'required|min:1',
+            'email' => 'nullable|email',
+            'country_id' => 'nullable|exists:hc_regions_countries,id',
+            'street_address' => 'required|min:1',
+            'city' => 'required|min:1',
+            'postal_code' => 'required|min:1',
+            'phone' => 'required|min:1',
         ];
     }
 }
