@@ -208,7 +208,7 @@
 
                                     @if($config['order']->order_carriers->location)
                                         <dd>{{ $config['order']->order_carriers->location }}</dd>
-                                    @else
+                                    @elseif($config['order']->order_address)
                                         <dd>
                                             {{ $config['order']->order_address->street_address }}
                                             , {{ $config['order']->order_address->city }}
@@ -246,45 +246,47 @@
                         </div>
                         <div class="box-body">
 
-                            <dl class="dl-horizontal">
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.full_name') }}</dt>
-                                <dd>
-                                    {{ $config['order']->order_address->first_name }}
-                                    {{ $config['order']->order_address->last_name }}
-                                </dd>
+                            @if($config['order']->order_address)
+                                <dl class="dl-horizontal">
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.email') }}</dt>
-                                <dd>{{ $config['order']->order_address->email }}</dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.full_name') }}</dt>
+                                    <dd>
+                                        {{ $config['order']->order_address->first_name }}
+                                        {{ $config['order']->order_address->last_name }}
+                                    </dd>
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.phone') }}</dt>
-                                <dd>{{ $config['order']->order_address->phone }}</dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.email') }}</dt>
+                                    <dd>{{ $config['order']->order_address->email }}</dd>
 
-                                <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.page_title') }}</dt>
-                                <dd>
-                                    {{ $config['order']->order_address->street_address }},
-                                    {{ $config['order']->order_address->city }}
-                                    , LT-{{ $config['order']->order_address->postal_code }}
-                                </dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.phone') }}</dt>
+                                    <dd>{{ $config['order']->order_address->phone }}</dd>
 
-                                @if($config['order']->order_address->company_name)
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_name') }}</dt>
-                                    <dd>{{ $config['order']->order_address->company_name }}</dd>
+                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.page_title') }}</dt>
+                                    <dd>
+                                        {{ $config['order']->order_address->street_address }},
+                                        {{ $config['order']->order_address->city }}
+                                        , LT-{{ $config['order']->order_address->postal_code }}
+                                    </dd>
 
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_code') }}</dt>
-                                    <dd>{{ $config['order']->order_address->company_code }}</dd>
+                                    @if($config['order']->order_address->company_name)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_name') }}</dt>
+                                        <dd>{{ $config['order']->order_address->company_name }}</dd>
 
-                                    @if($config['order']->order_address->company_vat)
-                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_vat') }}</dt>
-                                        <dd>{{ $config['order']->order_address->company_vat }}</dd>
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_code') }}</dt>
+                                        <dd>{{ $config['order']->order_address->company_code }}</dd>
+
+                                        @if($config['order']->order_address->company_vat)
+                                            <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.company_vat') }}</dt>
+                                            <dd>{{ $config['order']->order_address->company_vat }}</dd>
+                                        @endif
                                     @endif
-                                @endif
 
-                                @if($config['order']->order_address->notes)
-                                    <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.notes') }}</dt>
-                                    <dd>{{ $config['order']->order_address->notes }}</dd>
-                                @endif
-                            </dl>
-
+                                    @if($config['order']->order_address->notes)
+                                        <dt>{{ trans('HCECommerceOrders::e_commerce_orders_address.notes') }}</dt>
+                                        <dd>{{ $config['order']->order_address->notes }}</dd>
+                                    @endif
+                                </dl>
+                            @endif
                         </div>
                     </div>
 
