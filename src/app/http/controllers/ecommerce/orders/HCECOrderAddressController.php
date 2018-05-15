@@ -7,6 +7,10 @@ use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommerceorders\app\models\ecommerce\orders\HCECOrderAddress;
 use interactivesolutions\honeycombecommerceorders\app\validators\ecommerce\orders\HCECOrderAddressValidator;
 
+/**
+ * Class HCECOrderAddressController
+ * @package interactivesolutions\honeycombecommerceorders\app\http\controllers\ecommerce\orders
+ */
 class HCECOrderAddressController extends HCBaseController
 {
 
@@ -160,12 +164,23 @@ class HCECOrderAddressController extends HCBaseController
     /**
      * Delete records table
      *
-     * @param $list
+     * @param array $list
      * @return mixed
+     * @throws \Exception
      */
     protected function __apiDestroy(array $list)
     {
-        HCECOrderAddress::destroy($list);
+        \DB::beginTransaction();
+
+        try {
+            HCECOrderAddress::whereIn('id', $list)->forceDelete();
+        } catch ( \Exception $e ) {
+            \DB::rollback();
+
+            throw $e;
+        }
+
+        \DB::commit();
 
         return hcSuccess();
     }
@@ -253,6 +268,7 @@ class HCECOrderAddressController extends HCBaseController
      * Getting user data on POST call
      *
      * @return mixed
+     * @throws \Exception
      */
     protected function getInputData()
     {
