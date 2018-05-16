@@ -62,6 +62,10 @@ class HCECUserAddressController extends HCBaseController
                 "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.user_id'),
             ],
+            'updated_at' => [
+                "type" => "text",
+                "label" => trans('HCTranslations::core.updated'),
+            ],
             'form_name' => [
                 "type" => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_address.form_name'),
@@ -126,6 +130,7 @@ class HCECUserAddressController extends HCBaseController
      * Create item
      *
      * @return mixed
+     * @throws \Exception
      */
     protected function __apiStore()
     {
@@ -139,8 +144,9 @@ class HCECUserAddressController extends HCBaseController
     /**
      * Updates existing item based on ID
      *
-     * @param $id
+     * @param string $id
      * @return mixed
+     * @throws \Exception
      */
     protected function __apiUpdate(string $id)
     {
@@ -231,6 +237,7 @@ class HCECUserAddressController extends HCBaseController
         }
 
         $list = HCECUserAddress::with($with)->select($select)
+            ->addSelect('created_at', 'updated_at')
             // add filters
             ->where(function ($query) use ($select) {
                 $query = $this->getRequestParameters($query, $select);

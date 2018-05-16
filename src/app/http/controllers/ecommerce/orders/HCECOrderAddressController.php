@@ -61,6 +61,10 @@ class HCECOrderAddressController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.order_id'),
             ],
+            'updated_at' => [
+                "type" => "text",
+                "label" => trans('HCTranslations::core.updated'),
+            ],
             'email'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders_address.email'),
@@ -225,6 +229,7 @@ class HCECOrderAddressController extends HCBaseController
             $select = HCECOrderAddress::getFillableFields();
 
         $list = HCECOrderAddress::with($with)->select($select)
+            ->addSelect('updated_at')
             // add filters
             ->where(function ($query) use ($select) {
                 $query = $this->getRequestParameters($query, $select);

@@ -60,6 +60,10 @@ class HCECOrdersController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_payment_status_id'),
             ],
+            'created_at' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceOrders::e_commerce_orders.order_date'),
+            ],
             'order_state.title'          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceOrders::e_commerce_orders.order_state_id'),
@@ -144,8 +148,9 @@ class HCECOrdersController extends HCBaseController
     /**
      * Updates existing item based on ID
      *
-     * @param $id
+     * @param string $id
      * @return mixed
+     * @throws \Exception
      */
     protected function __apiUpdate(string $id)
     {
@@ -237,6 +242,7 @@ class HCECOrdersController extends HCBaseController
         HCECOrders::$customAppends = ['content_url', 'full_name'];
 
         $list = HCECOrders::with($with)->select($select)
+            ->addSelect('created_at')
             // add filters
             ->where(function ($query) use ($select) {
                 $query = $this->getRequestParameters($query, $select);
