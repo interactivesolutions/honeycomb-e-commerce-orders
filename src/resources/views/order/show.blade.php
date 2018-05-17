@@ -156,6 +156,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 @if($config['order']->history->isNotEmpty())
 
                                     @foreach($config['order']->history as $history)
@@ -175,6 +176,7 @@
                                     @endforeach
 
                                 @endif
+
                                 </tbody>
                             </table>
                         </div>
@@ -421,6 +423,7 @@
                                 {{ hcprice()->round($config['order']->total_price) }}
                             </td>
                         </tr>
+
                     </table>
                 </div>
             </div>
