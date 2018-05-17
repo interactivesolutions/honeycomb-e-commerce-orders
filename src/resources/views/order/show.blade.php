@@ -214,6 +214,8 @@
                                             , {{ $config['order']->order_address->city }}
                                             , LT-{{ $config['order']->order_address->postal_code }}
                                         </dd>
+                                    @else
+                                        <dd>-</dd>
                                     @endif
 
                                     <dt>{{ trans('HCECommerceOrders::e_commerce_orders_carriers.shipping_price') }}</dt>
