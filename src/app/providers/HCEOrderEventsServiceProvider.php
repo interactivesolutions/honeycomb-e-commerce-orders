@@ -21,12 +21,6 @@ class HCEOrderEventsServiceProvider extends ServiceProvider
         HCECOrderPaymentAccepted::class     => [
             HCECGenerateInvoiceNumber::class,
         ],
-        HCECOrderCanceledAndRestored::class => [
-            HCECDeleteGeneratedInvoiceNumber::class,
-        ],
-        HCECOrderCanceled::class            => [
-            HCECDeleteGeneratedInvoiceNumber::class,
-        ],
     ];
 
     /**

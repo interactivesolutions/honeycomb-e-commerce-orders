@@ -16,8 +16,8 @@ class HCECDeleteGeneratedInvoiceNumber
      */
     public function handle($event)
     {
-        HCECOrderInvoices::where(['order_id' => $event->order->id])->delete();
-
-        info('deleted invoice number of order: ' . $event->order->reference);
+//        HCECOrderInvoices::where(['order_id' => $event->order->id])->delete();
+//
+//        info('deleted invoice number of order: ' . $event->order->reference);
     }
 }
